@@ -1,11 +1,15 @@
+import { Routes, Route } from 'react-router-dom'
+import HomePage from './pages/HomePage'
 import './assets/scss/App.scss'
 
 function App() {
-  return (
-    <>
-      <h1>Welcome to the Star Wars Encyclopedia</h1>
-    </>
-  )
+    return (
+        <div id="App">
+            <Routes>
+                  <Route path="/" element={<HomePage />} />
+            </Routes>
+        </div>
+    )
 }
 
 export default App
