@@ -4,24 +4,36 @@
  * <https://swapi.thehiveresistance.com/api>
  */
 import axios from 'axios'
+import { SW_FilmsResponse } from '../types'
 
-const BASE_URL = 'https://swapi.thehiveresistance.com'
-const films = '/films'
+// Create a new axios instance
+const instance = axios.create({
+	baseURL: "https://swapi.thehiveresistance.com/api",
+	timeout: 10000,
+	headers: {
+		"Content-Type": "application/json",
+		"Accept": "application/json",
+	}
+})
 
 /**
- * GET all films
-*/
-const getFilms = async <T>(endpoint: string) => {
-	const response = await axios.get(`${BASE_URL}${films}`)
+ * Execute a HTTP GET request to an endpoint
+ *
+ * @param {string} endpoint Endpoint to HTTP GET
+ * @returns Promise
+ */
+const get = async <T>(endpoint: string) => {
+	const response = await instance.get(endpoint)
 	return response.data as T
 }
 
 /**
- * Get a single film
+ * Search SW Films
  *
- * @param film_id Film ID
+ * @param {string} query Search query to search for
+ * @param {number} page Page of search results to get
+ * @returns Promise
  */
-export const getFilm = async <T>(film_id: number) => {
-	const res = await axios.get(`${BASE_URL}${films}/${film_id}`)
-	return res.data as T
+export const search = async (query: string, page = 1) => {
+	return get<SW_FilmsResponse>(`/search?query=${query}&tags=story&page=${page}`)
 }
