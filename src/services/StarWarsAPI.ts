@@ -35,5 +35,5 @@ const get = async <T>(endpoint: string) => {
  * @returns Promise
  */
 export const search = async (query: string, page = 1) => {
-	return get<SW_FilmsResponse>(`/search?query=${query}&tags=story&page=${page}`)
+	return get<SW_FilmsResponse>(`films/?search=${query}`)
 }
