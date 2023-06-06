@@ -1,7 +1,7 @@
 import * as React from "react"
 import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from "react-router-dom"
-import { get, search } from '../services/StarWarsAPI'
+import { get, searchPeople } from '../services/StarWarsAPI'
 import { SW_PeopleResponse } from '../types'
 import Search from '../components/Search'
 import Alert from 'react-bootstrap/Alert'
@@ -21,7 +21,7 @@ const PeoplePage = () => {
 	// get "search=" from URL Search Params
 	const query = searchParams.get('search')
 
-	const getFilms = async () => {
+	const getPeople = async () => {
 		setError(null)
 
 		try {
@@ -33,14 +33,13 @@ const PeoplePage = () => {
 		}
 	}
 
-	/*
 	const searchSWPeople = async (searchQuery: string, searchPage = 1) => {
 		setError(null)
 		setLoading(true)
 		setSearchResult(null)
 
 		try {
-			const data = await search(searchQuery, searchPage)
+			const data = await searchPeople(searchQuery, searchPage)
 			setSearchResult(data)
 		} catch (err: any) {
 			setError(err.message)
@@ -73,27 +72,26 @@ const PeoplePage = () => {
 		}
 		searchSWPeople(query, page)
 	}, [page, query])
-	*/
 
 	useEffect(() => {
-		getFilms()
+		getPeople()
 	}, [])
 
 	return (
 		<>
 			<h1>Star Wars / people</h1>
 
-			{/* <Search
+			<Search
 				value={searchInput}
 				onChange={e => setSearchInput(e.target.value)}
 				onSubmit={handleSubmit}
-			/> */}
+			/>
 
 			{ error && <Alert variant="secondary">{error}</Alert>}
 
 			{ loading && <p>Loading...</p>}
 
-			{/* { searchResult && (
+			{ searchResult && (
 				<div id="search-result">
 					<p>Showing {searchResult.data.length} search results for "{query}"...</p>
 
@@ -104,14 +102,11 @@ const PeoplePage = () => {
 								// href={searchResult.first_page_url}
 								key={data.id}
 							>
-								<h2 className="h3">{data.title}</h2>
-								<p className="text-muted small mb-0">
-									director: {data.director} 
-								</p>
+								<h2 className="h3">{data.name}</h2>
 								<Button
 									className="my-3"
 									variant="dark"
-									onClick={() => { navigate(`/films/${data.id}`, { state: { message: `${data.title}` } })}}
+									onClick={() => { navigate(`/people/${data.id}`, { state: { message: `${data.name}` } })}}
 								>
 										Read more
 								</Button>
@@ -119,7 +114,7 @@ const PeoplePage = () => {
 						))}
 					</ListGroup>
 				</div>
-			)} */}
+			)}
 
 			{ !searchInput && resource && (
 			<div id="resource">
