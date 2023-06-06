@@ -1,16 +1,17 @@
 import * as React from "react"
 import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from "react-router-dom"
+import { get, searchFilms } from '../services/StarWarsAPI'
+import { SW_FilmsResponse } from '../types'
 import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
+import Spinner from 'react-bootstrap/Spinner'
 import Search from '../components/Search'
-import { get, searchFilms } from '../services/StarWarsAPI'
-import { SW_FilmsResponse } from '../types'
 
 const FilmsPage = () => {
 	const [error, setError] = useState<string|null>(null)
-	const [loading, setLoading] = useState(false)
+	const [loading, setLoading] = useState(true)
 	const [resource, setResource] = useState<SW_FilmsResponse|null>(null)
 	const [page, setPage] = useState(1)
 	const [searchInput, setSearchInput] = useState("")
@@ -23,6 +24,7 @@ const FilmsPage = () => {
 
 	const getFilms = async () => {
 		setError(null)
+		setLoading(true)
 
 		try {
 			const data = await get<SW_FilmsResponse|null>('/films')
@@ -31,6 +33,8 @@ const FilmsPage = () => {
 		} catch (err: any) {
 			setError(err.message)
 		}
+
+		setLoading(false)
 	}
 
 	const searchSWFilms = async (searchQuery: string, searchPage = 1) => {
@@ -81,17 +85,24 @@ const FilmsPage = () => {
 		<>
 			<h1>Star Wars / Films</h1>
 
-			<Search
-				value={searchInput}
-				onChange={e => setSearchInput(e.target.value)}
-				onSubmit={handleSubmit}
-			/>
+			{ loading && 
+				<Spinner animation="border" role="status" variant="light">
+					<span className="visually-hidden">Loading...</span>
+				</Spinner>
+			}
 
-			{ error && <Alert variant="secondary">{error}</Alert>}
+			{ !loading && 
+				<Search
+					value={searchInput}
+					onChange={e => setSearchInput(e.target.value)}
+					onSubmit={handleSubmit}
+				/>
+			}
 
-			{ loading && <p>Loading...</p>}
+			{ !loading && error && <Alert variant="secondary">{error}</Alert>}
 
-			{ searchResult && (
+
+			{ !loading && searchResult && (
 				<div id="search-result">
 					<p>Showing {searchResult.data.length} search results for "{query}"...</p>
 
@@ -116,7 +127,7 @@ const FilmsPage = () => {
 				</div>
 			)}
 
-			{ !searchInput && resource && (
+			{ !loading && !searchInput && resource && (
 			<div id="resource">
 					<p>All Star Wars films ({resource.data.length})</p>
 

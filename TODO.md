@@ -7,6 +7,8 @@
 - [ ] Deploy to Netlify or GitHub Pages (pending)
 - [ ] CSS 
   - [ ] Responsiveness
+  - [ ] Implement dream loading spinner (https://mhnpd.github.io/react-loader-spinner/docs/components/infinity-spin)
+  - [ ] Create dropdown for resources (for example all characters, https://react-bootstrap.github.io/docs/components/dropdowns)
 - [ ] Add extra resources (planets, species, starships, vehicles)
 - [ ] Search function on each extra resource
 - [ ] Provide links, if needed, for the extra resources
@@ -14,11 +16,11 @@
 
 ### In Progress
 
-- [ ] Loading handling
 - [ ] Pagination
 
 ### Completed
 
+- [x] Loading handling
 - [x] Provide links for resource's object (character to film)
 - [x] Provide links for resource's object (films to character)
 - [x] Use React and TypeScript

@@ -5,16 +5,20 @@ import { SW_Person } from '../types'
 import { getResource, searchFilms } from '../services/StarWarsAPI'
 import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
+import Spinner from 'react-bootstrap/Spinner'
 
 const PersonPage = () => {
     const location = useLocation()
     const navigate = useNavigate()
     const [error, setError] = useState<string|null>(null)
+    const [loading, setLoading] = useState(true)
     const [resource, setResource] = useState<SW_Person|null>(null)
     const { id } = useParams()
 	const resourceId = Number(id)
 
     const getPerson = async (id: number) => {
+        setLoading(true)
+
         try {
             const data = await getResource<SW_Person|null>('/people', id)
             setResource(data)
@@ -22,6 +26,8 @@ const PersonPage = () => {
         } catch (err: any) {
             setError(err.message)
         }
+
+        setLoading(false)
     }
     
     useEffect(() => {
@@ -40,9 +46,16 @@ const PersonPage = () => {
             >
                     Go back
             </Button>
+
             <h1>{location?.state.message}</h1>
 
-            { resource && (
+            { loading && 
+				<Spinner animation="border" role="status" variant="light">
+					<span className="visually-hidden">Loading...</span>
+				</Spinner>
+			}
+
+            { !loading && resource && (
                 <div id="resource">
                         <ListGroup className="mb-3">
                                 <ListGroup.Item

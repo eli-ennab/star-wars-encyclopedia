@@ -7,6 +7,7 @@ import Search from '../components/Search'
 import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
+import Spinner from 'react-bootstrap/Spinner'
 
 const PeoplePage = () => {
 	const [error, setError] = useState<string|null>(null)
@@ -23,6 +24,7 @@ const PeoplePage = () => {
 
 	const getPeople = async () => {
 		setError(null)
+		setLoading(true)
 
 		try {
 			const data = await get<SW_PeopleResponse|null>('/people')
@@ -31,6 +33,8 @@ const PeoplePage = () => {
 		} catch (err: any) {
 			setError(err.message)
 		}
+
+		setLoading(false)
 	}
 
 	const searchSWPeople = async (searchQuery: string, searchPage = 1) => {
@@ -81,17 +85,23 @@ const PeoplePage = () => {
 		<>
 			<h1>Star Wars / people</h1>
 
-			<Search
-				value={searchInput}
-				onChange={e => setSearchInput(e.target.value)}
-				onSubmit={handleSubmit}
-			/>
+			{ loading && 
+				<Spinner animation="border" role="status" variant="light">
+					<span className="visually-hidden">Loading...</span>
+				</Spinner>
+			}
 
-			{ error && <Alert variant="secondary">{error}</Alert>}
+			{ !loading && 
+				<Search
+					value={searchInput}
+					onChange={e => setSearchInput(e.target.value)}
+					onSubmit={handleSubmit}
+				/>
+			}
 
-			{ loading && <p>Loading...</p>}
+			{ !loading && error && <Alert variant="secondary">{error}</Alert>}
 
-			{ searchResult && (
+			{ !loading && searchResult && (
 				<div id="search-result">
 					<p>Showing {searchResult.data.length} search results for "{query}"...</p>
 
@@ -116,7 +126,7 @@ const PeoplePage = () => {
 				</div>
 			)}
 
-			{ !searchInput && resource && (
+			{ !loading && !searchInput && resource && (
 			<div id="resource">
 					<p>All Star Wars people ({resource.data.length})</p>
 
