@@ -4,7 +4,7 @@
  * <https://swapi.thehiveresistance.com/api>
  */
 import axios from 'axios'
-import { SW_FilmsResponse } from '../types'
+import { SW_FilmsResponse, SW_PeopleResponse } from '../types'
 
 // Create a new axios instance
 const instance = axios.create({
@@ -45,6 +45,17 @@ export const getResource = async <T>(endpoint: string, resource_id: number) => {
  * @param {number} page Page of search results to get
  * @returns Promise
  */
-export const search = async (query: string, page = 1) => {
+export const searchFilms = async (query: string, page = 1) => {
 	return get<SW_FilmsResponse>(`films/?search=${query}`)
+}
+
+/**
+ * Search SW People
+ *
+ * @param {string} query Search query to search for
+ * @param {number} page Page of search results to get
+ * @returns Promise
+ */
+export const searchPeople = async (query: string, page = 1) => {
+	return get<SW_PeopleResponse>(`people/?search=${query}`)
 }
