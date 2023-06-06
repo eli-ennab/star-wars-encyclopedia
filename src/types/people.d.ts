@@ -24,7 +24,7 @@ export type SW_PeopleResponse = {
     data: SW_People[]
     first_page_url: string
     from: number
-    last_page: 1
+    last_page: number
     last_page_url: string
     links: [
         url: string|null,

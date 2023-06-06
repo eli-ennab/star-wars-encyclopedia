@@ -20,7 +20,7 @@ export type SW_FilmsResponse = {
     data: SW_Films[]
     first_page_url: string
     from: number
-    last_page: 1
+    last_page: number
     last_page_url: string
     links: [
         url: string|null,
