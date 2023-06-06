@@ -1,13 +1,10 @@
 @import "bootstrap/scss/bootstrap";
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
 
-html {
-	border: 2px dotted whitesmoke;
-	height: 100vh;
-}
-
 body {
 	background-color: rgb(25, 25, 25);
+	width: 100vw;
+	height: 100vh;
 	color: whitesmoke;
 }
 
@@ -17,7 +14,7 @@ body {
 h1 {
 	font-weight: 900;
 	text-transform: uppercase;
-	margin: 20px;
+	margin-top: 0.75rem;
 }
 
 h1, h2, h3, h4, h5, h6 {
