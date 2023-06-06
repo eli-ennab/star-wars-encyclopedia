@@ -107,6 +107,13 @@ const FilmsPage = () => {
 								<p className="text-muted small mb-0">
 									director: {data.director} 
 								</p>
+								<Button
+									className="my-3"
+									variant="dark"
+									onClick={() => { navigate(`/films/${data.id}`, { state: { message: `About ${data.title}` } })}}
+								>
+										Read more
+								</Button>
 							</ListGroup.Item>
 						))}
 					</ListGroup>
