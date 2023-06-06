@@ -3,7 +3,6 @@
 ### Todo
 
 - [ ] Flawless indentation
-- [ ] Loading handling
 - [ ] Error handling
 - [ ] Deploy to Netlify or GitHub Pages (pending)
 - [ ] CSS 
@@ -15,11 +14,12 @@
 
 ### In Progress
 
+- [ ] Loading handling
 - [ ] Pagination
-- [ ] Provide links for resource's object (character to film)
 
 ### Completed
 
+- [x] Provide links for resource's object (character to film)
 - [x] Provide links for resource's object (films to character)
 - [x] Use React and TypeScript
 - [x] Communication with API in a service

@@ -50,10 +50,10 @@ export type SW_Person = {
     skin_color: string
     created: string
     edited: number
-    homeworld: [
+    homeworld: {
         id: number,
         name: string
-    ]
+    }
     films: [
         id: number,
         name: string

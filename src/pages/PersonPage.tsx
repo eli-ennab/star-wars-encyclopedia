@@ -59,10 +59,30 @@ const PersonPage = () => {
                                     <p className=""><strong>Eyecolor:</strong> {resource.eye_color}</p>
                                     <p className=""><strong>Haircolor:</strong> {resource.hair_color}</p>
                                     <p className=""><strong>Height:</strong> {resource.height}</p>
+                                    {/* <p className=""><strong>Homeworld:</strong> {resource.homeworld}</p> */}
+                                    <p><strong>Films:</strong></p>
+                                    <ListGroup className="mb-3">
+                                        {resource.films.map(data => (
+                                            <ListGroup.Item
+                                                // action
+                                                // href={searchResult.first_page_url}
+                                                key={data.id}
+                                            >
+                                                <h2 className="h3">{data.title}</h2>
+                                                <Button
+                                                    className="my-3"
+                                                    variant="dark"
+                                                    onClick={() => { navigate(`/films/${data.id}`, { state: { message: `${data.title}` } })}}
+                                                >
+                                                        Read more
+                                                </Button>
+                                            </ListGroup.Item>
+                                        ))}
+                                    </ListGroup>
                                 </ListGroup.Item>
                         </ListGroup>
                     </div>
-            )}
+                )}
         </>
     )
 }
