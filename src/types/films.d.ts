@@ -22,7 +22,11 @@ export type SW_FilmsResponse = {
     from: number
     last_page: 1
     last_page_url: string
-    links: []
+    links: [
+        url: string|null,
+        label: string,
+        active: boolean
+    ]
     next_page_url: string|null,
     path: string
     per_page: number
