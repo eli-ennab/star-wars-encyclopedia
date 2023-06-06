@@ -1,10 +1,67 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { SW_Films } from '../types'
+import { getResource, search } from '../services/StarWarsAPI'
+import Button from 'react-bootstrap/Button'
+import ListGroup from 'react-bootstrap/ListGroup'
 
 const FilmPage = () => {
     const location = useLocation()
+    const navigate = useNavigate()
+    const [error, setError] = useState<string|null>(null)
+    const [resource, setResource] = useState<SW_Films|null>(null)
+    const { id } = useParams()
+	const resourceId = Number(id)
+
+    const getFilm = async (id: number) => {
+        try {
+            const data = await getResource<SW_Films|null>('/films', id)
+            setResource(data)
+            console.log(data)
+        } catch (err: any) {
+            setError(err.message)
+        }
+    }
+    
+    useEffect(() => {
+        if (typeof resourceId !== "number") {
+            return
+        }
+        getFilm(resourceId);
+    }, [resourceId])
+
     return (
         <>
             <h1>{location?.state.message}</h1>
+
+            { resource && (
+                <div id="resource">
+                        <ListGroup className="mb-3">
+                                <ListGroup.Item
+                                    // action
+                                    className="mb-3"
+                                    // href={}
+                                    // key={}
+                                >
+                                    <h2 className="h3">title: {resource.title}</h2>
+                                    <p className="text-muted small mb-0">
+                                        director: {resource.director} <br></br>
+                                        producer: {resource.producer} <br></br>
+                                        opening crawl: {resource.opening_crawl} <br></br>
+                                        release date: {resource.release_date} <br></br>
+                                    </p>
+                                    <Button
+                                        className="my-3"
+                                        variant="dark"
+                                        onClick={() => { navigate(-1)}}
+                                    >
+                                            Go back
+                                    </Button>
+                                </ListGroup.Item>
+                        </ListGroup>
+                    </div>
+            )}
         </>
     )
 }
