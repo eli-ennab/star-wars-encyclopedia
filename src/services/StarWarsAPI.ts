@@ -17,14 +17,25 @@ const instance = axios.create({
 })
 
 /**
- * Execute a HTTP GET request to an endpoint
+ * GET request to an endpoint
  *
- * @param {string} endpoint Endpoint to HTTP GET
+ * @param {string} endpoint Endpoint to GET
  * @returns Promise
  */
-const get = async <T>(endpoint: string) => {
+export const get = async <T>(endpoint: string) => {
 	const response = await instance.get(endpoint)
 	return response.data as T
+}
+
+/**
+ * GET request to an endpoint with id
+ *
+ * @param {string} endpoint Endpoint to GET
+ * @param {number} resource_id Resource ID to GET
+ * @returns Promise
+ */
+export const getResource = async <T>(endpoint: string, resource_id: number) => {
+	return get<T>(`${endpoint}/${resource_id}`)
 }
 
 /**
