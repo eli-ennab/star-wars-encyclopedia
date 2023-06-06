@@ -5,7 +5,7 @@ import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Search from '../components/Search'
-import { get, search } from '../services/StarWarsAPI'
+import { get, searchFilms } from '../services/StarWarsAPI'
 import { SW_FilmsResponse } from '../types'
 
 const FilmsPage = () => {
@@ -39,7 +39,7 @@ const FilmsPage = () => {
 		setSearchResult(null)
 
 		try {
-			const data = await search(searchQuery, searchPage)
+			const data = await searchFilms(searchQuery, searchPage)
 			setSearchResult(data)
 		} catch (err: any) {
 			setError(err.message)

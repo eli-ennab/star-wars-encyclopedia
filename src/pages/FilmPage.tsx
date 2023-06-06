@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { Link, useParams } from 'react-router-dom'
 import { SW_Film } from '../types'
-import { getResource, search } from '../services/StarWarsAPI'
+import { getResource, searchFilms } from '../services/StarWarsAPI'
 import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
 
