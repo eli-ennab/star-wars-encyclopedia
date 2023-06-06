@@ -138,11 +138,9 @@ const FilmsPage = () => {
 								</Button>
 							</ListGroup.Item>
 						))}
-
 					</ListGroup>
 				</div>
 			)}
-
 		</>
 	)
 }
