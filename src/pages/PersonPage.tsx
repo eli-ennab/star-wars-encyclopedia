@@ -33,6 +33,13 @@ const PersonPage = () => {
 
     return (
         <>
+            <Button
+                className="my-3"
+                variant="light"
+                onClick={() => { navigate(-1)}}
+            >
+                    Go back
+            </Button>
             <h1>{location?.state.message}</h1>
 
             { resource && (
@@ -52,13 +59,6 @@ const PersonPage = () => {
                                     <p className=""><strong>Eyecolor:</strong> {resource.eye_color}</p>
                                     <p className=""><strong>Haircolor:</strong> {resource.hair_color}</p>
                                     <p className=""><strong>Height:</strong> {resource.height}</p>
-                                    <Button
-                                        className="my-3"
-                                        variant="dark"
-                                        onClick={() => { navigate(-1)}}
-                                    >
-                                            Go back
-                                    </Button>
                                 </ListGroup.Item>
                         </ListGroup>
                     </div>

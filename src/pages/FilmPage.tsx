@@ -33,6 +33,14 @@ const FilmPage = () => {
 
     return (
         <>
+            <Button
+                className="my-3"
+                variant="light"
+                onClick={() => { navigate(-1)}}
+            >
+                    Go back
+            </Button>
+
             <h1>{location?.state.message}</h1>
 
             { resource && (
@@ -48,15 +56,26 @@ const FilmPage = () => {
                                     <p className=""><strong>Producer:</strong> {resource.producer}</p>
                                     <p className=""><strong>Opening crawl:</strong> {resource.opening_crawl}</p>
                                     <p className=""><strong>Release date:</strong> {resource.release_date}</p>
-                                    {/* <p className=""><strong>Characters:</strong> {resource.characters.map(characters => characters.name)}</p> */}
-                                    <Button
-                                        className="my-3"
-                                        variant="dark"
-                                        onClick={() => { navigate(-1)}}
-                                    >
-                                            Go back
-                                    </Button>
-                                </ListGroup.Item>
+                                    <p><strong>Characters:</strong></p>
+                                    <ListGroup className="mb-3">
+                                    {resource.characters.map(data => (
+                                        <ListGroup.Item
+                                            // action
+                                            // href={searchResult.first_page_url}
+                                            key={data.id}
+                                        >
+                                            <h2 className="h3">{data.name}</h2>
+                                            <Button
+                                                className="my-3"
+                                                variant="dark"
+                                                onClick={() => { navigate(`/people/${data.id}`, { state: { message: `${data.name}` } })}}
+                                            >
+                                                    Read more
+                                            </Button>
+                                        </ListGroup.Item>
+                                    ))}
+                                </ListGroup>
+                            </ListGroup.Item>
                         </ListGroup>
                     </div>
             )}

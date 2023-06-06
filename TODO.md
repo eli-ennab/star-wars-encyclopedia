@@ -10,15 +10,17 @@
   - [ ] Responsiveness
 - [ ] Add extra resources (planets, species, starships, vehicles)
 - [ ] Search function on each extra resource
+- [ ] Provide links, if needed, for the extra resources
 - [ ] Pagination using query parameters (should survive page reloads and navigation via browser back/forward buttons)
 
 ### In Progress
 
 - [ ] Pagination
-- [ ] Provide links for all resource's object
+- [ ] Provide links for resource's object (character to film)
 
 ### Completed
 
+- [x] Provide links for resource's object (films to character)
 - [x] Use React and TypeScript
 - [x] Communication with API in a service
 - [x] Mobile First
