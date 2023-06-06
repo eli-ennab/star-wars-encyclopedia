@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import HomePage from './pages/HomePage'
+import FilmPage from './pages/FilmPage'
 import FilmsPage from './pages/FilmsPage'
 import NotFoundPage from './pages/NotFoundPage'
 import Navigation from './components/Navigation'
@@ -16,6 +17,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/films" element={<FilmsPage />} />
+                    <Route path="/films/:id" element={<FilmPage />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </Container>
