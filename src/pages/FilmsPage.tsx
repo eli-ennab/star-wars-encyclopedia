@@ -1,21 +1,38 @@
 import { useEffect, useState } from 'react'
+import * as React from "react";
+import { useNavigate } from "react-router-dom"
 import Alert from 'react-bootstrap/Alert'
+import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
 import { useSearchParams } from 'react-router-dom'
-import { search } from '../services/StarWarsAPI'
+import { get, search } from '../services/StarWarsAPI'
 import { SW_FilmsResponse } from '../types'
 import Search from '../components/Search'
 
 const FilmsPage = () => {
 	const [error, setError] = useState<string|null>(null)
 	const [loading, setLoading] = useState(false)
+	const [resource, setResource] = useState<SW_FilmsResponse|null>(null)
 	const [page, setPage] = useState(1)
-	const [searchInput, setSearchInput] = useState("")	// input field
-	const [searchResult, setSearchResult] = useState<SW_FilmsResponse|null>(null)	// data that gets back from api
-	const [searchParams, setSearchParams] = useSearchParams()	// search query in url *after* /search?
+	const [searchInput, setSearchInput] = useState("")
+	const [searchResult, setSearchResult] = useState<SW_FilmsResponse|null>(null)
+	const [searchParams, setSearchParams] = useSearchParams()
+	const navigate = useNavigate()
 
 	// get "search=" from URL Search Params
 	const query = searchParams.get('search')
+
+	const getFilms = async () => {
+		setError(null)
+
+		try {
+			const data = await get<SW_FilmsResponse|null>('/films')
+			setResource(data)
+			console.log(data)
+		} catch (err: any) {
+			setError(err.message)
+		}
+	}
 
 	const searchSWFilms = async (searchQuery: string, searchPage = 1) => {
 		setError(null)
@@ -23,8 +40,8 @@ const FilmsPage = () => {
 		setSearchResult(null)
 
 		try {
-			const res = await search(searchQuery, searchPage)
-			setSearchResult(res)
+			const data = await search(searchQuery, searchPage)
+			setSearchResult(data)
 		} catch (err: any) {
 			setError(err.message)
 		}
@@ -54,13 +71,16 @@ const FilmsPage = () => {
 		if (!query) {
 			return
 		}
-
 		searchSWFilms(query, page)
 	}, [page, query])
 
+	useEffect(() => {
+		getFilms()
+	}, [])
+
 	return (
 		<>
-			<h1>Star Wars films search</h1>
+			<h1>Star Wars films</h1>
 
 			<Search
 				value={searchInput}
@@ -79,8 +99,8 @@ const FilmsPage = () => {
 					<ListGroup className="mb-3">
 						{searchResult.data.map(data => (
 							<ListGroup.Item
-								action
-								href={searchResult.first_page_url}
+								// action
+								// href={searchResult.first_page_url}
 								key={data.id}
 							>
 								<h2 className="h3">{data.title}</h2>
@@ -92,6 +112,37 @@ const FilmsPage = () => {
 					</ListGroup>
 				</div>
 			)}
+
+			{ !searchInput && resource && (
+			<div id="resource">
+					<p>All Star Wars films ({resource.data.length})</p>
+
+					<ListGroup className="mb-3">
+						{resource?.data.map(data => (
+							<ListGroup.Item
+								// action
+								className="mb-3"
+								// href={}
+								key={data.id}
+							>
+								<h2 className="h3">{data.title}</h2>
+								<p className="text-muted small mb-0">
+									director: {data.director} 
+								</p>
+								<Button
+									className="my-3"
+									variant="dark"
+									onClick={() => { navigate(`/films/${data.id}`, { state: { message: `About ${data.title}` } })}}
+								>
+										Read more
+								</Button>
+							</ListGroup.Item>
+						))}
+
+					</ListGroup>
+				</div>
+			)}
+
 		</>
 	)
 }
