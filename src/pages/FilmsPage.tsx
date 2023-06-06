@@ -110,7 +110,7 @@ const FilmsPage = () => {
 								<Button
 									className="my-3"
 									variant="dark"
-									onClick={() => { navigate(`/films/${data.id}`, { state: { message: `About ${data.title}` } })}}
+									onClick={() => { navigate(`/films/${data.id}`, { state: { message: `${data.title}` } })}}
 								>
 										Read more
 								</Button>
@@ -139,7 +139,7 @@ const FilmsPage = () => {
 								<Button
 									className="my-3"
 									variant="dark"
-									onClick={() => { navigate(`/films/${data.id}`, { state: { message: `About ${data.title}` } })}}
+									onClick={() => { navigate(`/films/${data.id}`, { state: { message: `${data.title}` } })}}
 								>
 										Read more
 								</Button>

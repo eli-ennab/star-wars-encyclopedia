@@ -44,13 +44,10 @@ const FilmPage = () => {
                                     // href={}
                                     // key={}
                                 >
-                                    <h2 className="h3">title: {resource.title}</h2>
-                                    <p className="text-muted small mb-0">
-                                        director: {resource.director} <br></br>
-                                        producer: {resource.producer} <br></br>
-                                        opening crawl: {resource.opening_crawl} <br></br>
-                                        release date: {resource.release_date} <br></br>
-                                    </p>
+                                    <p className=""><strong>Director:</strong> {resource.director}</p>
+                                    <p className=""><strong>Producer:</strong> {resource.producer}</p>
+                                    <p className=""><strong>Opening crawl:</strong> {resource.opening_crawl}</p>
+                                    <p className=""><strong>Release date:</strong> {resource.release_date}</p>
                                     <Button
                                         className="my-3"
                                         variant="dark"
