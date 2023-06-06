@@ -17,7 +17,8 @@ function App() {
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/films" element={<FilmsPage />} />
-                    <Route path="/films/:id" element={<FilmPage />} />
+                    {/* <Route path="/films/:id" element={<FilmPage />} /> */}
+                    <Route path="/:category/:id" element={<FilmPage />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </Container>
