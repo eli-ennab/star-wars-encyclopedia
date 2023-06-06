@@ -1,13 +1,12 @@
+import * as React from "react"
 import { useEffect, useState } from 'react'
-import * as React from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
-import { useSearchParams } from 'react-router-dom'
+import Search from '../components/Search'
 import { get, search } from '../services/StarWarsAPI'
 import { SW_FilmsResponse } from '../types'
-import Search from '../components/Search'
 
 const FilmsPage = () => {
 	const [error, setError] = useState<string|null>(null)
@@ -80,7 +79,7 @@ const FilmsPage = () => {
 
 	return (
 		<>
-			<h1>Star Wars films</h1>
+			<h1>Star Wars / Films</h1>
 
 			<Search
 				value={searchInput}
@@ -104,9 +103,6 @@ const FilmsPage = () => {
 								key={data.id}
 							>
 								<h2 className="h3">{data.title}</h2>
-								<p className="text-muted small mb-0">
-									director: {data.director} 
-								</p>
 								<Button
 									className="my-3"
 									variant="dark"
@@ -133,9 +129,6 @@ const FilmsPage = () => {
 								key={data.id}
 							>
 								<h2 className="h3">{data.title}</h2>
-								<p className="text-muted small mb-0">
-									director: {data.director} 
-								</p>
 								<Button
 									className="my-3"
 									variant="dark"
