@@ -4,7 +4,7 @@
  * <https://swapi.thehiveresistance.com/api>
  */
 import axios from 'axios'
-import { SW_FilmsResponse, SW_PeopleResponse } from '../types'
+import { SW_FilmsResponse, SW_PeopleResponse, SW_PlanetsResponse } from '../types'
 
 // Create a new axios instance
 const instance = axios.create({
@@ -61,7 +61,6 @@ export const getResourceById = async <T>(endpoint: string, resource_id: number) 
  * @returns Promise
  */
 export const searchFilms = async (query: string, page = 1) => {
-	// return get<SW_FilmsResponse>(`films?page=${page}/?search=${query}`)
 	return get<SW_FilmsResponse>(`films/?search=${query}`)
 }
 
@@ -75,4 +74,16 @@ export const searchFilms = async (query: string, page = 1) => {
  */
 export const searchPeople = async (query: string, page = 1) => {
 	return get<SW_PeopleResponse>(`people/?search=${query}`)
+}
+
+/**
+ * Search SW Planets
+ * Example: https://swapi.thehiveresistance.com/api/planets?search=da
+ *
+ * @param {string} query Search query to search for
+ * @param {number} page Page of search results to get
+ * @returns Promise
+ */
+export const searchPlanets = async (query: string, page = 1) => {
+	return get<SW_PlanetsResponse>(`planets/?search=${query}`)
 }
