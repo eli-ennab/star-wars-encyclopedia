@@ -28,34 +28,51 @@ export const get = async <T>(endpoint: string) => {
 }
 
 /**
+ * GET request to an endpoint BY PAGE
+ * Example: https://swapi.thehiveresistance.com/api/people?page=2
+ * 
+ * @param {string} endpoint Endpoint to GET
+ * @param {number} page Pagenumber to GET
+ * @returns Promise
+ */
+export const getResourcesByPage = async <T>(endpoint: string, page = 1) => {
+	const response = await instance.get(`${endpoint}?page=${page}`)
+	return response.data as T
+}
+
+/**
  * GET request to an endpoint with id
- *
+ * Example: https://swapi.thehiveresistance.com/api/people/1
+ * 
  * @param {string} endpoint Endpoint to GET
  * @param {number} resource_id Resource ID to GET
  * @returns Promise
  */
-export const getResource = async <T>(endpoint: string, resource_id: number) => {
+export const getResourceById = async <T>(endpoint: string, resource_id: number) => {
 	return get<T>(`${endpoint}/${resource_id}`)
 }
 
 /**
  * Search SW Films
+ * Example: https://swapi.thehiveresistance.com/api/people/?search=jedi
  *
  * @param {string} query Search query to search for
  * @param {number} page Page of search results to get
  * @returns Promise
  */
 export const searchFilms = async (query: string, page = 1) => {
-	return get<SW_FilmsResponse>(`films?page=${page}/?search=${query}`)
+	// return get<SW_FilmsResponse>(`films?page=${page}/?search=${query}`)
+	return get<SW_FilmsResponse>(`films/?search=${query}`)
 }
 
 /**
  * Search SW People
+ * Example: https://swapi.thehiveresistance.com/api/people?search=boba
  *
  * @param {string} query Search query to search for
  * @param {number} page Page of search results to get
  * @returns Promise
  */
 export const searchPeople = async (query: string, page = 1) => {
-	return get<SW_PeopleResponse>(`people?page=${page}/?search=${query}`)
+	return get<SW_PeopleResponse>(`people/?search=${query}`)
 }
