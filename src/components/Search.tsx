@@ -24,7 +24,7 @@ const Search: React.FC<IProps> = ( { value, onChange, onSubmit } ) => {
 
 				<div className="d-flex justify-content-end">
 					<Button
-						variant="dark"
+						variant="light"
 						type="submit"
 						disabled={!value.trim().length}
 					>Search</Button>

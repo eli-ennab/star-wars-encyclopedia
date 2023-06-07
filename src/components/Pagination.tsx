@@ -22,7 +22,7 @@ const Pagination: React.FC<IPaginationProps> = ({
 		<div className="d-flex justify-content-between align-items-center">
 		<div className="prev">
 			<Button
-				variant="dark"
+				variant="light"
 				disabled={!hasPreviousPage}
 				onClick={onPreviousPage}
 			>PREVIOUS</Button>
@@ -32,7 +32,7 @@ const Pagination: React.FC<IPaginationProps> = ({
 
 		<div className="next">
 			<Button
-				variant="dark"
+				variant="light"
 				disabled={!hasNextPage}
 				onClick={onNextPage}
 			>NEXT</Button>
