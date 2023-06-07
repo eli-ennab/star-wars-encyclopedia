@@ -16,10 +16,11 @@
 
 ### In Progress
 
-- [ ] Pagination
+- [ ] Pagination for search (if neccessary?)
 
 ### Completed
 
+- [x] Pagination for getting all resources (not pagination for search)
 - [x] Loading handling
 - [x] Provide links for resource's object (character to film)
 - [x] Provide links for resource's object (films to character)
