@@ -1,35 +1,35 @@
 import * as React from 'react'
 import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { getResourcesByPage, searchFilms } from '../services/StarWarsAPI'
-import { SW_FilmsResponse } from '../types'
-import Pagination from '../components/Pagination'
-import Search from '../components/Search'
+import { getResourcesByPage, searchPeople } from '../../services/StarWarsAPI'
+import { SW_PeopleResponse } from '../../types'
+import Pagination from '../../components/Pagination'
+import Search from '../../components/Search'
 import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Spinner from 'react-bootstrap/Spinner'
 
-const FilmsPage = () => {
+const PeoplePage = () => {
 	const [error, setError] = useState<string|null>(null)
-	const [loading, setLoading] = useState(true)
-	const [resource, setResource] = useState<SW_FilmsResponse|null>(null)
+	const [loading, setLoading] = useState(false)
+	const [resource, setResource] = useState<SW_PeopleResponse|null>(null)
 	const [page, setPage] = useState(1)
 	const [searchInput, setSearchInput] = useState("")
-	const [searchResult, setSearchResult] = useState<SW_FilmsResponse|null>(null)
+	const [searchResult, setSearchResult] = useState<SW_PeopleResponse|null>(null)
 	const [searchParams, setSearchParams] = useSearchParams()
 	const navigate = useNavigate()
 
 	// get "search=" from URL Search Params
 	const query = searchParams.get('search') as string
 
-	const getFilms = async (endpoint: string, page = 1) => {
+	const getPeople = async (endpoint: string, page = 1) => {
 		setError(null)
 		setLoading(true)
 		setResource(null)
 
 		try {
-			const data = await getResourcesByPage<SW_FilmsResponse|null>('/films', page)
+			const data = await getResourcesByPage<SW_PeopleResponse|null>('/people', page)
 			setResource(data)
 		} catch (err: any) {
 			setError(err.message)
@@ -38,13 +38,13 @@ const FilmsPage = () => {
 		setLoading(false)
 	}
 
-	const searchSWFilms = async (searchQuery: string, searchPage = 1) => {
+	const searchSWPeople = async (searchQuery: string, searchPage = 1) => {
 		setError(null)
 		setLoading(true)
 		setSearchResult(null)
 
 		try {
-			const data = await searchFilms(searchQuery, searchPage)
+			const data = await searchPeople(searchQuery, searchPage)
 			setSearchResult(data)
 		} catch (err: any) {
 			setError(err.message)
@@ -67,7 +67,7 @@ const FilmsPage = () => {
 		setSearchParams( { search: searchInput } )
 
 		// search
-		searchSWFilms(searchInput, 1)
+		searchSWPeople(searchInput, 1)
 	}
 
 	// react to changes in page state
@@ -75,16 +75,16 @@ const FilmsPage = () => {
 		if (!query) {
 			return
 		}
-		searchSWFilms(query, page)
+		searchSWPeople(query, page)
 	}, [page, query])
 
 	useEffect(() => {
-		getFilms(query, page)
+		getPeople(query, page)
 	}, [query, page])
 
 	return (
 		<>
-			<h1>Star Wars / Films</h1>
+			<h1>Star Wars / People</h1>
 
 			{ loading && 
 				<Spinner animation="border" role="status" variant="light">
@@ -102,7 +102,6 @@ const FilmsPage = () => {
 
 			{ !loading && error && <Alert variant="secondary">{error}</Alert>}
 
-
 			{ !loading && searchInput.length > 0 && searchResult && (
 				<div id="search-result">
 					<p>There are {searchResult.data.length} search results for "{query}"</p>
@@ -114,11 +113,11 @@ const FilmsPage = () => {
 								// href={searchResult.first_page_url}
 								key={data.id}
 							>
-								<h2 className="h3">{data.title}</h2>
+								<h2 className="h3">{data.name}</h2>
 								<Button
 									className="my-3"
 									variant="dark"
-									onClick={() => { navigate(`/films/${data.id}`, { state: { message: `${data.title}` } })}}
+									onClick={() => { navigate(`/people/${data.id}`, { state: { message: `${data.name}` } })}}
 								>
 										Read more
 								</Button>
@@ -140,11 +139,11 @@ const FilmsPage = () => {
 								// href={}
 								key={data.id}
 							>
-								<h2 className="h3">{data.title}</h2>
+								<h2 className="h3">{data.name}</h2>
 								<Button
 									className="my-3"
 									variant="dark"
-									onClick={() => { navigate(`/films/${data.id}`, { state: { message: `${data.title}` } })}}
+									onClick={() => { navigate(`/people/${data.id}`, { state: { message: `${data.name}` } })}}
 								>
 										Read more
 								</Button>
@@ -155,15 +154,16 @@ const FilmsPage = () => {
 					<Pagination
 						page={resource.current_page}
 						totalPages={resource.last_page}
-						hasPreviousPage={page < 1}
-						hasNextPage={page > resource.last_page}
+						hasPreviousPage={page > 1}
+						hasNextPage={page < resource.last_page}
 						onPreviousPage={() => {setPage(prevValue => prevValue - 1)}}
 						onNextPage={() => {setPage(prevValue => prevValue + 1)}}
 					/>
+
 				</div>
 			)}
 		</>
 	)
 }
 
-export default FilmsPage
+export default PeoplePage

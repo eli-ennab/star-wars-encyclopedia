@@ -1,35 +1,35 @@
 import * as React from 'react'
 import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { getResourcesByPage, searchPeople } from '../services/StarWarsAPI'
-import { SW_PeopleResponse } from '../types'
-import Pagination from '../components/Pagination'
-import Search from '../components/Search'
+import { getResourcesByPage, searchPlanets } from '../../services/StarWarsAPI'
+import { SW_PlanetsResponse } from '../../types'
+import Pagination from '../../components/Pagination'
+import Search from '../../components/Search'
 import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Spinner from 'react-bootstrap/Spinner'
 
-const PeoplePage = () => {
+const PlanetsPage = () => {
 	const [error, setError] = useState<string|null>(null)
-	const [loading, setLoading] = useState(false)
-	const [resource, setResource] = useState<SW_PeopleResponse|null>(null)
+	const [loading, setLoading] = useState(true)
+	const [resource, setResource] = useState<SW_PlanetsResponse|null>(null)
 	const [page, setPage] = useState(1)
 	const [searchInput, setSearchInput] = useState("")
-	const [searchResult, setSearchResult] = useState<SW_PeopleResponse|null>(null)
+	const [searchResult, setSearchResult] = useState<SW_PlanetsResponse|null>(null)
 	const [searchParams, setSearchParams] = useSearchParams()
 	const navigate = useNavigate()
 
 	// get "search=" from URL Search Params
 	const query = searchParams.get('search') as string
 
-	const getPeople = async (endpoint: string, page = 1) => {
+	const getPlanets = async (endpoint: string, page = 1) => {
 		setError(null)
 		setLoading(true)
 		setResource(null)
 
 		try {
-			const data = await getResourcesByPage<SW_PeopleResponse|null>('/people', page)
+			const data = await getResourcesByPage<SW_PlanetsResponse|null>('/planets', page)
 			setResource(data)
 		} catch (err: any) {
 			setError(err.message)
@@ -38,13 +38,13 @@ const PeoplePage = () => {
 		setLoading(false)
 	}
 
-	const searchSWPeople = async (searchQuery: string, searchPage = 1) => {
+	const searchSWPlanets = async (searchQuery: string, searchPage = 1) => {
 		setError(null)
 		setLoading(true)
 		setSearchResult(null)
 
 		try {
-			const data = await searchPeople(searchQuery, searchPage)
+			const data = await searchPlanets(searchQuery, searchPage)
 			setSearchResult(data)
 		} catch (err: any) {
 			setError(err.message)
@@ -67,7 +67,7 @@ const PeoplePage = () => {
 		setSearchParams( { search: searchInput } )
 
 		// search
-		searchSWPeople(searchInput, 1)
+		searchSWPlanets(searchInput, 1)
 	}
 
 	// react to changes in page state
@@ -75,16 +75,16 @@ const PeoplePage = () => {
 		if (!query) {
 			return
 		}
-		searchSWPeople(query, page)
+		searchSWPlanets(query, page)
 	}, [page, query])
 
 	useEffect(() => {
-		getPeople(query, page)
+		getPlanets(query, page)
 	}, [query, page])
 
 	return (
 		<>
-			<h1>Star Wars / People</h1>
+			<h1>Star Wars / Planets</h1>
 
 			{ loading && 
 				<Spinner animation="border" role="status" variant="light">
@@ -102,6 +102,7 @@ const PeoplePage = () => {
 
 			{ !loading && error && <Alert variant="secondary">{error}</Alert>}
 
+
 			{ !loading && searchInput.length > 0 && searchResult && (
 				<div id="search-result">
 					<p>There are {searchResult.data.length} search results for "{query}"</p>
@@ -109,15 +110,13 @@ const PeoplePage = () => {
 					<ListGroup className="mb-3">
 						{searchResult.data.map(data => (
 							<ListGroup.Item
-								// action
-								// href={searchResult.first_page_url}
 								key={data.id}
 							>
 								<h2 className="h3">{data.name}</h2>
 								<Button
 									className="my-3"
 									variant="dark"
-									onClick={() => { navigate(`/people/${data.id}`, { state: { message: `${data.name}` } })}}
+									onClick={() => { navigate(`/planets/${data.id}`, { state: { message: `${data.name}` } })}}
 								>
 										Read more
 								</Button>
@@ -143,7 +142,7 @@ const PeoplePage = () => {
 								<Button
 									className="my-3"
 									variant="dark"
-									onClick={() => { navigate(`/people/${data.id}`, { state: { message: `${data.name}` } })}}
+									onClick={() => { navigate(`/planets/${data.id}`, { state: { message: `${data.name}` } })}}
 								>
 										Read more
 								</Button>
@@ -159,11 +158,10 @@ const PeoplePage = () => {
 						onPreviousPage={() => {setPage(prevValue => prevValue - 1)}}
 						onNextPage={() => {setPage(prevValue => prevValue + 1)}}
 					/>
-
 				</div>
 			)}
 		</>
 	)
 }
 
-export default PeoplePage
+export default PlanetsPage
