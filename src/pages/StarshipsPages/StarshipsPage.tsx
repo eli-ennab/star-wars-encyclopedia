@@ -10,7 +10,7 @@ import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Spinner from 'react-bootstrap/Spinner'
 
-const PlanetsPage = () => {
+const StarshipsPage = () => {
 	const [error, setError] = useState<string|null>(null)
 	const [loading, setLoading] = useState(true)
 	const [resource, setResource] = useState<SW_StarshipsResponse|null>(null)
@@ -29,7 +29,7 @@ const PlanetsPage = () => {
 		setResource(null)
 
 		try {
-			const data = await getResourcesByPage<SW_StarshipsResponse|null>('/species', page)
+			const data = await getResourcesByPage<SW_StarshipsResponse|null>('/starships', page)
 			setResource(data)
 		} catch (err: any) {
 			setError(err.message)
@@ -116,7 +116,7 @@ const PlanetsPage = () => {
 								<Button
 									className="my-3"
 									variant="dark"
-									onClick={() => { navigate(`/species/${data.id}`, { state: { message: `${data.name}` } })}}
+									onClick={() => { navigate(`/starships/${data.id}`, { state: { message: `${data.name}` } })}}
 								>
 										Read more
 								</Button>
@@ -142,7 +142,7 @@ const PlanetsPage = () => {
 								<Button
 									className="my-3"
 									variant="dark"
-									onClick={() => { navigate(`/species/${data.id}`, { state: { message: `${data.name}` } })}}
+									onClick={() => { navigate(`/starships/${data.id}`, { state: { message: `${data.name}` } })}}
 								>
 										Read more
 								</Button>
@@ -164,4 +164,4 @@ const PlanetsPage = () => {
 	)
 }
 
-export default PlanetsPage
+export default StarshipsPage

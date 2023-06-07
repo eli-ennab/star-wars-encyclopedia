@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Spinner from 'react-bootstrap/Spinner'
 
-const PlanetPage = () => {
+const SpeciePage = () => {
     const location = useLocation()
     const navigate = useNavigate()
     const [error, setError] = useState<string|null>(null)
@@ -105,4 +105,4 @@ const PlanetPage = () => {
     )
 }
 
-export default PlanetPage
+export default SpeciePage

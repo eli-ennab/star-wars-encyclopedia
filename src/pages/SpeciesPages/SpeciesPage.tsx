@@ -10,7 +10,7 @@ import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Spinner from 'react-bootstrap/Spinner'
 
-const PlanetsPage = () => {
+const SpeciesPage = () => {
 	const [error, setError] = useState<string|null>(null)
 	const [loading, setLoading] = useState(true)
 	const [resource, setResource] = useState<SW_SpeciesResponse|null>(null)
@@ -164,4 +164,4 @@ const PlanetsPage = () => {
 	)
 }
 
-export default PlanetsPage
+export default SpeciesPage

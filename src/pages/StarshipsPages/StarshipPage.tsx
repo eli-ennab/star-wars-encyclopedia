@@ -20,7 +20,7 @@ const StarshipPage = () => {
 		setLoading(true)
 
         try {
-            const data = await getResourceById<SW_Starship|null>('/species', id)
+            const data = await getResourceById<SW_Starship|null>('/starships', id)
             setResource(data)
             console.log(data)
         } catch (err: any) {
