@@ -6,6 +6,8 @@ import PeoplePage from './pages/PeoplePages/PeoplePage'
 import PersonPage from './pages/PeoplePages/PersonPage'
 import PlanetsPage from './pages/PlanetPages/PlanetsPage'
 import PlanetPage from './pages/PlanetPages/PlanetPage'
+import SpeciesPage from './pages/SpeciesPages/SpeciesPage'
+import SpeciePage from './pages/SpeciesPages/SpeciePage'
 import NotFoundPage from './pages/NotFoundPage'
 import Navigation from './components/Navigation'
 import Container from 'react-bootstrap/Container'
@@ -26,6 +28,8 @@ function App() {
                     <Route path="/people/:id" element={<PersonPage />} />
                     <Route path="/planets" element={<PlanetsPage />} />
                     <Route path="/planets/:id" element={<PlanetPage />} />
+                    <Route path="/species" element={<SpeciesPage />} />
+                    <Route path="/species/:id" element={<SpeciePage />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </Container>
