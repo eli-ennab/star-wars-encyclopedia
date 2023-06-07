@@ -103,9 +103,9 @@ const FilmsPage = () => {
 			{ !loading && error && <Alert variant="secondary">{error}</Alert>}
 
 
-			{ !loading && searchResult && (
+			{ !loading && searchInput.length > 0 && searchResult && (
 				<div id="search-result">
-					<p>Showing {searchResult.data.length} search results for "{query}"...</p>
+					<p>There are {searchResult.data.length} search results for "{query}"</p>
 
 					<ListGroup className="mb-3">
 						{searchResult.data.map(data => (
@@ -155,7 +155,7 @@ const FilmsPage = () => {
 					<Pagination
 						page={resource.current_page}
 						totalPages={resource.last_page}
-						hasPreviousPage={page >= 1}
+						hasPreviousPage={page < 1}
 						hasNextPage={page > resource.last_page}
 						onPreviousPage={() => {setPage(prevValue => prevValue - 1)}}
 						onNextPage={() => {setPage(prevValue => prevValue + 1)}}

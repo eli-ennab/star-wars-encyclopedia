@@ -102,9 +102,9 @@ const PeoplePage = () => {
 
 			{ !loading && error && <Alert variant="secondary">{error}</Alert>}
 
-			{ !loading && searchResult && (
+			{ !loading && searchInput.length > 0 && searchResult && (
 				<div id="search-result">
-					<p>Showing {searchResult.data.length} search results for "{query}"...</p>
+					<p>There are {searchResult.data.length} search results for "{query}"</p>
 
 					<ListGroup className="mb-3">
 						{searchResult.data.map(data => (
