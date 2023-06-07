@@ -50,6 +50,15 @@ button {
 	letter-spacing: .18rem;
 }
 
+.header-title {
+	-webkit-text-fill-color: transparent;
+	-webkit-text-stroke: 1px;
+}
+
+.category-title {
+	color: whitesmoke;
+}
+
 .active {
 	border-bottom: .5px dotted whitesmoke;
 }

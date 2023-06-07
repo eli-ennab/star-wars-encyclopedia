@@ -84,7 +84,7 @@ const StarshipsPage = () => {
 
 	return (
 		<>
-			<h1>Star Wars / Starships</h1>
+			<h1><span className="header-title">Star Wars /</span> <span className="category-title">Starships</span></h1>
 
 			{ loading && 
 				<Spinner animation="border" role="status" variant="light">

@@ -84,7 +84,7 @@ const SpeciesPage = () => {
 
 	return (
 		<>
-			<h1>Star Wars / Species</h1>
+			<h1><span className="header-title">Star Wars /</span> <span className="category-title">Species</span></h1>
 
 			{ loading && 
 				<Spinner animation="border" role="status" variant="light">
