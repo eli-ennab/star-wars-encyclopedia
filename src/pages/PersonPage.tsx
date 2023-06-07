@@ -2,7 +2,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { Link, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { SW_Person } from '../types'
-import { getResource, searchFilms } from '../services/StarWarsAPI'
+import { getResourceById, searchFilms } from '../services/StarWarsAPI'
 import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Spinner from 'react-bootstrap/Spinner'
@@ -20,7 +20,7 @@ const PersonPage = () => {
         setLoading(true)
 
         try {
-            const data = await getResource<SW_Person|null>('/people', id)
+            const data = await getResourceById<SW_Person|null>('/people', id)
             setResource(data)
             console.log(data)
         } catch (err: any) {
