@@ -46,7 +46,7 @@ export const getResource = async <T>(endpoint: string, resource_id: number) => {
  * @returns Promise
  */
 export const searchFilms = async (query: string, page = 1) => {
-	return get<SW_FilmsResponse>(`films/?search=${query}`)
+	return get<SW_FilmsResponse>(`films?page=${page}/?search=${query}`)
 }
 
 /**
@@ -57,5 +57,5 @@ export const searchFilms = async (query: string, page = 1) => {
  * @returns Promise
  */
 export const searchPeople = async (query: string, page = 1) => {
-	return get<SW_PeopleResponse>(`people/?search=${query}`)
+	return get<SW_PeopleResponse>(`people?page=${page}/?search=${query}`)
 }
