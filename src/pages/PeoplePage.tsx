@@ -1,8 +1,9 @@
-import * as React from "react"
+import * as React from 'react'
 import { useEffect, useState } from 'react'
-import { useNavigate, useSearchParams } from "react-router-dom"
-import { get, searchPeople } from '../services/StarWarsAPI'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { getResourcesByPage, searchPeople } from '../services/StarWarsAPI'
 import { SW_PeopleResponse } from '../types'
+import Pagination from '../components/Pagination'
 import Search from '../components/Search'
 import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
@@ -20,16 +21,16 @@ const PeoplePage = () => {
 	const navigate = useNavigate()
 
 	// get "search=" from URL Search Params
-	const query = searchParams.get('search')
+	const query = searchParams.get('search') as string
 
-	const getPeople = async () => {
+	const getPeople = async (endpoint: string, page = 1) => {
 		setError(null)
 		setLoading(true)
+		setResource(null)
 
 		try {
-			const data = await get<SW_PeopleResponse|null>('/people')
+			const data = await getResourcesByPage<SW_PeopleResponse|null>('/people', page)
 			setResource(data)
-			console.log(data)
 		} catch (err: any) {
 			setError(err.message)
 		}
@@ -78,12 +79,12 @@ const PeoplePage = () => {
 	}, [page, query])
 
 	useEffect(() => {
-		getPeople()
-	}, [])
+		getPeople(query, page)
+	}, [query, page])
 
 	return (
 		<>
-			<h1>Star Wars / people</h1>
+			<h1>Star Wars / People</h1>
 
 			{ loading && 
 				<Spinner animation="border" role="status" variant="light">
@@ -128,7 +129,7 @@ const PeoplePage = () => {
 
 			{ !loading && !searchInput && resource && (
 			<div id="resource">
-					<p>All Star Wars people ({resource.data.length})</p>
+					<p>{resource.total} hits</p>
 
 					<ListGroup className="mb-3">
 						{resource?.data.map(data => (
@@ -149,6 +150,16 @@ const PeoplePage = () => {
 							</ListGroup.Item>
 						))}
 					</ListGroup>
+
+					<Pagination
+						page={resource.current_page}
+						totalPages={resource.last_page}
+						hasPreviousPage={page > 1}
+						hasNextPage={page < resource.last_page}
+						onPreviousPage={() => {setPage(prevValue => prevValue - 1)}}
+						onNextPage={() => {setPage(prevValue => prevValue + 1)}}
+					/>
+
 				</div>
 			)}
 		</>

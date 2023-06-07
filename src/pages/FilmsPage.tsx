@@ -1,13 +1,14 @@
-import * as React from "react"
+import * as React from 'react'
 import { useEffect, useState } from 'react'
-import { useNavigate, useSearchParams } from "react-router-dom"
-import { get, searchFilms } from '../services/StarWarsAPI'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { getResourcesByPage, searchFilms } from '../services/StarWarsAPI'
 import { SW_FilmsResponse } from '../types'
+import Pagination from '../components/Pagination'
+import Search from '../components/Search'
 import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Spinner from 'react-bootstrap/Spinner'
-import Search from '../components/Search'
 
 const FilmsPage = () => {
 	const [error, setError] = useState<string|null>(null)
@@ -20,16 +21,16 @@ const FilmsPage = () => {
 	const navigate = useNavigate()
 
 	// get "search=" from URL Search Params
-	const query = searchParams.get('search')
+	const query = searchParams.get('search') as string
 
-	const getFilms = async () => {
+	const getFilms = async (endpoint: string, page = 1) => {
 		setError(null)
 		setLoading(true)
+		setResource(null)
 
 		try {
-			const data = await get<SW_FilmsResponse|null>('/films')
+			const data = await getResourcesByPage<SW_FilmsResponse|null>('/films', page)
 			setResource(data)
-			console.log(data)
 		} catch (err: any) {
 			setError(err.message)
 		}
@@ -78,8 +79,8 @@ const FilmsPage = () => {
 	}, [page, query])
 
 	useEffect(() => {
-		getFilms()
-	}, [])
+		getFilms(query, page)
+	}, [query, page])
 
 	return (
 		<>
@@ -129,7 +130,7 @@ const FilmsPage = () => {
 
 			{ !loading && !searchInput && resource && (
 			<div id="resource">
-					<p>All Star Wars films ({resource.data.length})</p>
+					<p>{resource.total} hits</p>
 
 					<ListGroup className="mb-3">
 						{resource?.data.map(data => (
@@ -150,6 +151,15 @@ const FilmsPage = () => {
 							</ListGroup.Item>
 						))}
 					</ListGroup>
+
+					<Pagination
+						page={resource.current_page}
+						totalPages={resource.last_page}
+						hasPreviousPage={page >= 1}
+						hasNextPage={page > resource.last_page}
+						onPreviousPage={() => {setPage(prevValue => prevValue - 1)}}
+						onNextPage={() => {setPage(prevValue => prevValue + 1)}}
+					/>
 				</div>
 			)}
 		</>
