@@ -8,6 +8,10 @@ import PlanetsPage from './pages/PlanetPages/PlanetsPage'
 import PlanetPage from './pages/PlanetPages/PlanetPage'
 import SpeciesPage from './pages/SpeciesPages/SpeciesPage'
 import SpeciePage from './pages/SpeciesPages/SpeciePage'
+import StarshipsPage from './pages/StarshipsPages/StarshipsPage'
+import StarshipPage from './pages/StarshipsPages/StarshipPage'
+import VehiclesPage from './pages/VehiclesPages/VehiclesPage'
+import VehiclePage from './pages/VehiclesPages/VehiclePage'
 import NotFoundPage from './pages/NotFoundPage'
 import Navigation from './components/Navigation'
 import Container from 'react-bootstrap/Container'
@@ -30,6 +34,10 @@ function App() {
                     <Route path="/planets/:id" element={<PlanetPage />} />
                     <Route path="/species" element={<SpeciesPage />} />
                     <Route path="/species/:id" element={<SpeciePage />} />
+                    <Route path="/starships" element={<StarshipsPage />} />
+                    <Route path="/starships/:id" element={<StarshipPage />} />
+                    <Route path="/vehicles" element={<VehiclesPage />} />
+                    <Route path="/vehicles/:id" element={<VehiclePage />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </Container>
