@@ -25,17 +25,17 @@ const Pagination: React.FC<IPaginationProps> = ({
 				variant="dark"
 				disabled={!hasPreviousPage}
 				onClick={onPreviousPage}
-			>Previous Page</Button>
+			>PREVIOUS</Button>
 		</div>
 
-		<div className="page">Page {page}/{totalPages}</div>
+		<div className="page"><p className="mb-0">PAGE {page} / {totalPages}</p></div>
 
 		<div className="next">
 			<Button
 				variant="dark"
 				disabled={!hasNextPage}
 				onClick={onNextPage}
-			>Next Page</Button>
+			>NEXT</Button>
 		</div>
 	</div>
 	)

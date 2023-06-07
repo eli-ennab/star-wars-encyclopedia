@@ -1,16 +1,22 @@
 @import "bootstrap/scss/bootstrap";
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@300&display=swap');
 
 body {
 	background-color: rgb(25, 25, 25);
 	width: 100vw;
 	height: 100vh;
 	color: whitesmoke;
+	font-family: 'Encode Sans', sans-serif;
 }
 
 nav {
 	background-color: black;
 	border-bottom: 1px dotted whitesmoke;
+}
+
+.btn {
+	border: 1px dotted whitesmoke;
 }
 
 /**
@@ -33,6 +39,13 @@ a {
 }
 
 p,
-li {
+li,
+label,
+button {
 	font-weight: 400;
+	letter-spacing: .18rem;
+}
+
+.active {
+	border-bottom: .5px dotted whitesmoke;
 }
