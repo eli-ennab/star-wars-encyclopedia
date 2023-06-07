@@ -6,6 +6,7 @@
 - [ ] Deploy to Netlify or GitHub Pages (pending)
 - [ ] CSS 
   - [ ] Responsiveness
+  - [ ] Icons instead of button text
   - [ ] Implement dream loading spinner (https://mhnpd.github.io/react-loader-spinner/docs/components/infinity-spin)
   - [ ] Create dropdown for resources (for example all characters, https://react-bootstrap.github.io/docs/components/dropdowns)
 
