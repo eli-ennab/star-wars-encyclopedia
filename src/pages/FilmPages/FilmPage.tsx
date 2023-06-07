@@ -68,9 +68,9 @@ const FilmPage = () => {
                             <Card>
                                 <Card.Body>
                                     <Card.Title>{resource.title}</Card.Title>
-                                    <Card.Text>{resource.release_date}</Card.Text>
-                                    <p>{resource.opening_crawl}</p>   
-                                    <p><strong>Characters:</strong></p>                              
+                                    <Card.Text><strong>Releasedate:</strong> {resource.release_date}</Card.Text>
+                                    <Card.Text><strong>Opening crawl:</strong> {resource.opening_crawl}</Card.Text>   
+                                    <Card.Text><strong>Characters:</strong></Card.Text>                              
                                     <ListGroup className="mb-3 d-flex flex-row flex-wrap">
                                         {resource.characters.map(data => (
                                             <ListGroup.Item key={data.id} className="col-12 col-lg-4">

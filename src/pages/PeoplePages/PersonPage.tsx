@@ -1,10 +1,14 @@
 import { useNavigate, useLocation } from 'react-router-dom'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { SW_Person } from '../../types'
-import { getResourceById, searchFilms } from '../../services/StarWarsAPI'
+import { getResourceById } from '../../services/StarWarsAPI'
+import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
+import Card from 'react-bootstrap/Card'
+import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
+import Row from 'react-bootstrap/Row'
 import Spinner from 'react-bootstrap/Spinner'
 
 const PersonPage = () => {
@@ -17,6 +21,7 @@ const PersonPage = () => {
 	const resourceId = Number(id)
 
     const getPerson = async (id: number) => {
+        setError(null)
         setLoading(true)
 
         try {
@@ -49,6 +54,8 @@ const PersonPage = () => {
 
             <h1>{location?.state.message}</h1>
 
+            { error && <Alert variant="warning">{error}</Alert>}
+
             { loading && 
 				<Spinner animation="border" role="status" variant="light">
 					<span className="visually-hidden">Loading...</span>
@@ -57,45 +64,34 @@ const PersonPage = () => {
 
             { !loading && resource && (
                 <div id="resource">
-                        <ListGroup className="mb-3">
-                                <ListGroup.Item
-                                    // action
-                                    className="mb-3"
-                                    // href={}
-                                    // key={}
-                                >
-                                    <p className=""><strong>Birthyear:</strong> {resource.birth_year}</p>
-                                    <p className=""><strong>Created:</strong> {resource.created}</p>
-                                    <p className=""><strong>Edited:</strong> {resource.edited}</p>
-                                    <p className=""><strong>Mass:</strong> {resource.mass}</p>
-                                    <p className=""><strong>Skincolor:</strong> {resource.skin_color}</p>
-                                    <p className=""><strong>Eyecolor:</strong> {resource.eye_color}</p>
-                                    <p className=""><strong>Haircolor:</strong> {resource.hair_color}</p>
-                                    <p className=""><strong>Height:</strong> {resource.height}</p>
-                                    {/* <p className=""><strong>Homeworld:</strong> {resource.homeworld}</p> */}
-                                    <p><strong>Films:</strong></p>
-                                    <ListGroup className="mb-3">
+                    <Row>
+                        <Col key={resource.id} xs={12} md={6} lg={12} className="mb-3">
+                            <Card>
+                                <Card.Body>
+                                    <Card.Title>{resource.name}</Card.Title>
+                                    <Card.Text><strong>Birthyear:</strong> {resource.birth_year}</Card.Text>
+                                    <Card.Text><strong>Created:</strong> {resource.created}</Card.Text>
+                                    <Card.Text><strong>Films:</strong></Card.Text>                              
+                                    <ListGroup className="mb-3 d-flex flex-row flex-wrap">
                                         {resource.films.map(data => (
-                                            <ListGroup.Item
-                                                // action
-                                                // href={searchResult.first_page_url}
-                                                key={data.id}
+                                            <ListGroup.Item key={data.id} className="col-12 col-lg-4">
+                                            <p>{data.title}</p>
+                                            <Button
+                                                className="my-3"
+                                                variant="dark"
+                                                onClick={() => { navigate(`/films/${data.id}`, { state: { message: `${data.title}` } })}}
                                             >
-                                                <h2 className="h3">{data.title}</h2>
-                                                <Button
-                                                    className="my-3"
-                                                    variant="dark"
-                                                    onClick={() => { navigate(`/films/${data.id}`, { state: { message: `${data.title}` } })}}
-                                                >
-                                                        Read more
-                                                </Button>
+                                                    Read more
+                                            </Button>
                                             </ListGroup.Item>
                                         ))}
                                     </ListGroup>
-                                </ListGroup.Item>
-                        </ListGroup>
-                    </div>
-                )}
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
+                </div>
+            )}
         </>
     )
 }

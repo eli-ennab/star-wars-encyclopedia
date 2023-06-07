@@ -7,7 +7,9 @@ import Pagination from '../../components/Pagination'
 import Search from '../../components/Search'
 import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
-import ListGroup from 'react-bootstrap/ListGroup'
+import Card from 'react-bootstrap/Card'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 import Spinner from 'react-bootstrap/Spinner'
 
 const PeoplePage = () => {
@@ -19,8 +21,6 @@ const PeoplePage = () => {
 	const [searchResult, setSearchResult] = useState<SW_PeopleResponse|null>(null)
 	const [searchParams, setSearchParams] = useSearchParams()
 	const navigate = useNavigate()
-
-	// get "search=" from URL Search Params
 	const query = searchParams.get('search') as string
 
 	const getPeople = async (endpoint: string, page = 1) => {
@@ -60,17 +60,13 @@ const PeoplePage = () => {
 			return
 		}
 
-		// reset page state
 		setPage(1)
 
-		// set input value as search in searchParams
 		setSearchParams( { search: searchInput } )
 
-		// search
 		searchSWPeople(searchInput, 1)
 	}
 
-	// react to changes in page state
 	useEffect(() => {
 		if (!query) {
 			return
@@ -84,7 +80,7 @@ const PeoplePage = () => {
 
 	return (
 		<>
-			<h1>Star Wars / People</h1>
+			<h1><span className="header-title">Star Wars /</span> <span className="category-title">People</span></h1>
 
 			{ loading && 
 				<Spinner animation="border" role="status" variant="light">
@@ -105,51 +101,51 @@ const PeoplePage = () => {
 			{ !loading && searchInput.length > 0 && searchResult && (
 				<div id="search-result">
 					<p>There are {searchResult.data.length} search results for "{query}"</p>
-
-					<ListGroup className="mb-3">
+					<Row>
 						{searchResult.data.map(data => (
-							<ListGroup.Item
-								// action
-								// href={searchResult.first_page_url}
-								key={data.id}
-							>
-								<h2 className="h3">{data.name}</h2>
-								<Button
-									className="my-3"
-									variant="dark"
-									onClick={() => { navigate(`/people/${data.id}`, { state: { message: `${data.name}` } })}}
-								>
-										Read more
-								</Button>
-							</ListGroup.Item>
+							<Col key={data.id} xs={12} md={6} lg={4} className="mb-3">
+								<Card>
+									<Card.Body>
+										<Card.Title>{data.name}</Card.Title>
+										<Card.Text>{data.created}</Card.Text>
+										<Button
+											className="my-3"
+											variant="dark"
+											onClick={() => { navigate(`/people/${data.id}`, { state: { message: `${data.title}` } })}}
+										>
+												Read more
+										</Button>
+									</Card.Body>
+								</Card>
+							</Col>
 						))}
-					</ListGroup>
+					</Row>
 				</div>
 			)}
 
 			{ !loading && !searchInput && resource && (
 			<div id="resource">
 					<p>{resource.total} hits</p>
-
-					<ListGroup className="mb-3">
+					<Row>
 						{resource?.data.map(data => (
-							<ListGroup.Item
-								// action
-								className="mb-3"
-								// href={}
-								key={data.id}
-							>
-								<h2 className="h3">{data.name}</h2>
-								<Button
-									className="my-3"
-									variant="dark"
-									onClick={() => { navigate(`/people/${data.id}`, { state: { message: `${data.name}` } })}}
-								>
-										Read more
-								</Button>
-							</ListGroup.Item>
+							<Col key={data.id} xs={12} md={6} lg={4} className="mb-3">
+								<Card>
+									<Card.Body>
+										<Card.Title>{data.name}</Card.Title>
+										<Card.Text>{data.created}</Card.Text>
+										<Button
+											variant="dark"
+											onClick={() => {
+											navigate(`/people/${data.id}`, { state: { message: `${data.name}` } });
+											}}
+										>
+											Read more
+										</Button>
+									</Card.Body>
+								</Card>
+							</Col>
 						))}
-					</ListGroup>
+					</Row>
 
 					<Pagination
 						page={resource.current_page}
@@ -159,7 +155,6 @@ const PeoplePage = () => {
 						onPreviousPage={() => {setPage(prevValue => prevValue - 1)}}
 						onNextPage={() => {setPage(prevValue => prevValue + 1)}}
 					/>
-
 				</div>
 			)}
 		</>

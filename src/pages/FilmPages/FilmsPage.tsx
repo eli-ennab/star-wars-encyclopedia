@@ -21,8 +21,6 @@ const FilmsPage = () => {
 	const [searchResult, setSearchResult] = useState<SW_FilmsResponse|null>(null)
 	const [searchParams, setSearchParams] = useSearchParams()
 	const navigate = useNavigate()
-
-	// get "search=" from URL Search Params
 	const query = searchParams.get('search') as string
 
 	const getFilms = async (endpoint: string, page = 1) => {
@@ -83,7 +81,7 @@ const FilmsPage = () => {
 
 	return (
 		<>
-			<h1>Star Wars / Films</h1>
+			<h1><span className="header-title">Star Wars /</span> <span className="category-title">Films</span></h1>
 
 			{ loading && 
 				<Spinner animation="border" role="status" variant="light">
@@ -99,7 +97,7 @@ const FilmsPage = () => {
 				/>
 			}
 
-			{ error && <Alert variant="secondary">{error}</Alert>}
+			{ error && <Alert variant="warning">{error}</Alert>}
 
 			{ !loading && searchInput.length > 0 && searchResult && (
 				<div id="search-result">
