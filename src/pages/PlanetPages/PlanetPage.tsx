@@ -3,14 +3,14 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { SW_Planet } from '../../types'
 import { getResourceById } from '../../services/StarWarsAPI'
+import LoadingSpinner from '../../components/LoadingSpinner'
+import ReturnButton from '../../components/ReturnButton'
 import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Row from 'react-bootstrap/Row'
-import Spinner from 'react-bootstrap/Spinner'
-import ReturnButton from '../../components/ReturnButton'
 
 const PlanetPage = () => {
     const location = useLocation()
@@ -50,11 +50,7 @@ const PlanetPage = () => {
 
             { error && <Alert variant="warning">{error}</Alert>}
 
-            { loading && 
-				<Spinner animation="border" role="status" variant="light">
-					<span className="visually-hidden">Loading...</span>
-				</Spinner>
-			}
+			{ loading && <LoadingSpinner /> }
 
             { !loading && resource && (
                 <div id="resource">

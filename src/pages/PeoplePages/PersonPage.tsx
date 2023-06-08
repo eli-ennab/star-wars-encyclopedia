@@ -3,14 +3,14 @@ import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { SW_Person } from '../../types'
 import { getResourceById } from '../../services/StarWarsAPI'
+import LoadingSpinner from '../../components/LoadingSpinner'
+import ReturnButton from '../../components/ReturnButton'
 import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Row from 'react-bootstrap/Row'
-import Spinner from 'react-bootstrap/Spinner'
-import ReturnButton from '../../components/ReturnButton'
 
 const PersonPage = () => {
     const location = useLocation()
@@ -28,7 +28,6 @@ const PersonPage = () => {
         try {
             const data = await getResourceById<SW_Person|null>('/people', id)
             setResource(data)
-            console.log(data)
         } catch (err: any) {
             setError(err.message)
         }
@@ -51,11 +50,7 @@ const PersonPage = () => {
 
             { error && <Alert variant="warning">{error}</Alert>}
 
-            { loading && 
-				<Spinner animation="border" role="status" variant="light">
-					<span className="visually-hidden">Loading...</span>
-				</Spinner>
-			}
+			{ loading && <LoadingSpinner /> }
 
             { !loading && resource && (
                 <div id="resource">

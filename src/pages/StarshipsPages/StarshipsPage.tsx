@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { getResourcesByPage, searchStarships } from '../../services/StarWarsAPI'
 import { SW_StarshipsResponse } from '../../types'
+import LoadingSpinner from '../../components/LoadingSpinner'
 import Pagination from '../../components/Pagination'
 import Search from '../../components/Search'
 import Alert from 'react-bootstrap/Alert'
@@ -10,7 +11,6 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import Spinner from 'react-bootstrap/Spinner'
 
 const StarshipsPage = () => {
 	const [error, setError] = useState<string|null>(null)
@@ -82,12 +82,10 @@ const StarshipsPage = () => {
 	return (
 		<>
 			<h1><span className="header-title">Star Wars /</span> <span className="category-title">Starships</span></h1>
+			
+			{ error && <Alert variant="warning">{error}</Alert>}
 
-			{ loading && 
-				<Spinner animation="border" role="status" variant="light">
-					<span className="visually-hidden">Loading...</span>
-				</Spinner>
-			}
+			{ loading && <LoadingSpinner /> }
 
 			{ !loading && 
 				<Search
@@ -96,8 +94,6 @@ const StarshipsPage = () => {
 					onSubmit={handleSubmit}
 				/>
 			}
-
-			{ error && <Alert variant="warning">{error}</Alert>}
 
 			{ !loading && searchInput.length > 0 && searchResult && (
 				<div id="search-result">

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { getResourcesByPage, searchSpecies } from '../../services/StarWarsAPI'
 import { SW_SpeciesResponse } from '../../types'
+import LoadingSpinner from '../../components/LoadingSpinner'
 import Pagination from '../../components/Pagination'
 import Search from '../../components/Search'
 import Alert from 'react-bootstrap/Alert'
@@ -10,7 +11,6 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import Spinner from 'react-bootstrap/Spinner'
 
 const SpeciesPage = () => {
 	const [error, setError] = useState<string|null>(null)
@@ -83,11 +83,9 @@ const SpeciesPage = () => {
 		<>
 			<h1><span className="header-title">Star Wars /</span> <span className="category-title">Species</span></h1>
 
-			{ loading && 
-				<Spinner animation="border" role="status" variant="light">
-					<span className="visually-hidden">Loading...</span>
-				</Spinner>
-			}
+			{ error && <Alert variant="warning">{error}</Alert>}
+
+			{ loading && <LoadingSpinner /> }
 
 			{ !loading && 
 				<Search
@@ -97,7 +95,6 @@ const SpeciesPage = () => {
 				/>
 			}
 
-			{ error && <Alert variant="warning">{error}</Alert>}
 
 			{ !loading && searchInput.length > 0 && searchResult && (
 				<div id="search-result">
