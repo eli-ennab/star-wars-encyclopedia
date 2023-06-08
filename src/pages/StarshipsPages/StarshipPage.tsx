@@ -6,6 +6,7 @@ import { getResourceById } from '../../services/StarWarsAPI'
 import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Spinner from 'react-bootstrap/Spinner'
+import ReturnButton from '../../components/ReturnButton'
 
 const StarshipPage = () => {
     const location = useLocation()
@@ -39,13 +40,7 @@ const StarshipPage = () => {
 
     return (
         <>
-            <Button
-                className="my-3"
-                variant="light"
-                onClick={() => { navigate(-1)}}
-            >
-                    Go back
-            </Button>
+            <ReturnButton />
 
             <h1>{location?.state.message}</h1>
 

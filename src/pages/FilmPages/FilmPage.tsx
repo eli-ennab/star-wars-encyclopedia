@@ -10,6 +10,7 @@ import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Row from 'react-bootstrap/Row'
 import Spinner from 'react-bootstrap/Spinner'
+import ReturnButton from '../../components/ReturnButton'
 
 const FilmPage = () => {
     const location = useLocation()
@@ -43,13 +44,7 @@ const FilmPage = () => {
 
     return (
         <>
-            <Button
-                className="my-3"
-                variant="light"
-                onClick={() => { navigate(-1)}}
-            >
-                    Go back
-            </Button>
+            <ReturnButton />
 
             <h1>{location?.state.message}</h1>
 
