@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button'
+import { TfiAngleLeft, TfiAngleRight } from 'react-icons/tfi'
 
 interface IPaginationProps {
 	page: number
@@ -22,20 +23,20 @@ const Pagination: React.FC<IPaginationProps> = ({
 		<div className="d-flex justify-content-between align-items-center">
 		<div className="prev">
 			<Button
-				variant="light"
+				variant="dark"
 				disabled={!hasPreviousPage}
 				onClick={onPreviousPage}
-			>PREVIOUS</Button>
+			><TfiAngleLeft /></Button>
 		</div>
 
 		<div className="page"><p className="mb-0">PAGE {page} / {totalPages}</p></div>
 
 		<div className="next">
 			<Button
-				variant="light"
+				variant="dark"
 				disabled={!hasNextPage}
 				onClick={onNextPage}
-			>NEXT</Button>
+			><TfiAngleRight /></Button>
 		</div>
 	</div>
 	)
