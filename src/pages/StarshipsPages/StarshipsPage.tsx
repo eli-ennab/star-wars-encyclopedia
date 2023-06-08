@@ -7,7 +7,9 @@ import Pagination from '../../components/Pagination'
 import Search from '../../components/Search'
 import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
-import ListGroup from 'react-bootstrap/ListGroup'
+import Card from 'react-bootstrap/Card'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 import Spinner from 'react-bootstrap/Spinner'
 
 const StarshipsPage = () => {
@@ -20,7 +22,6 @@ const StarshipsPage = () => {
 	const [searchParams, setSearchParams] = useSearchParams()
 	const navigate = useNavigate()
 
-	// get "search=" from URL Search Params
 	const query = searchParams.get('search') as string
 
 	const getStarships = async (endpoint: string, page = 1) => {
@@ -60,17 +61,13 @@ const StarshipsPage = () => {
 			return
 		}
 
-		// reset page state
 		setPage(1)
 
-		// set input value as search in searchParams
 		setSearchParams( { search: searchInput } )
 
-		// search
 		searchStarships(searchInput, 1)
 	}
 
-	// react to changes in page state
 	useEffect(() => {
 		if (!query) {
 			return
@@ -100,55 +97,56 @@ const StarshipsPage = () => {
 				/>
 			}
 
-			{ !loading && error && <Alert variant="secondary">{error}</Alert>}
-
+			{ error && <Alert variant="warning">{error}</Alert>}
 
 			{ !loading && searchInput.length > 0 && searchResult && (
 				<div id="search-result">
 					<p>There are {searchResult.data.length} search results for "{query}"</p>
+						<Row>
+							{searchResult.data.map(data => (
+								<Col key={data.id} xs={12} md={6} lg={4} className="mb-3">
+									<Card>
+										<Card.Body>
+											<Card.Title>{data.name}</Card.Title>
+											<Card.Text>{data.created}</Card.Text>
+											<Button
+												className="my-3"
+												variant="dark"
+												onClick={() => { navigate(`/starships/${data.id}`, { state: { message: `${data.name}` } })}}
+											>
+													Read more
+											</Button>
+										</Card.Body>
+									</Card>
+								</Col>
+							))}
+						</Row>
+					</div>
+				)}
 
-					<ListGroup className="mb-3">
-						{searchResult.data.map(data => (
-							<ListGroup.Item
-								key={data.id}
-							>
-								<h2 className="h3">{data.name}</h2>
-								<Button
-									className="my-3"
-									variant="dark"
-									onClick={() => { navigate(`/starships/${data.id}`, { state: { message: `${data.name}` } })}}
-								>
-										Read more
-								</Button>
-							</ListGroup.Item>
-						))}
-					</ListGroup>
-				</div>
-			)}
-
-			{ !loading && !searchInput && resource && (
-			<div id="resource">
+				{ !loading && !searchInput && resource && (
+				<div id="resource">
 					<p>{resource.total} hits</p>
-
-					<ListGroup className="mb-3">
+					<Row>
 						{resource?.data.map(data => (
-							<ListGroup.Item
-								// action
-								className="mb-3"
-								// href={}
-								key={data.id}
-							>
-								<h2 className="h3">{data.name}</h2>
-								<Button
-									className="my-3"
-									variant="dark"
-									onClick={() => { navigate(`/starships/${data.id}`, { state: { message: `${data.name}` } })}}
-								>
-										Read more
-								</Button>
-							</ListGroup.Item>
+							<Col key={data.id} xs={12} md={6} lg={4} className="mb-3">
+								<Card>
+									<Card.Body>
+										<Card.Title>{data.name}</Card.Title>
+										<Card.Text>{data.created}</Card.Text>
+										<Button
+											variant="dark"
+											onClick={() => {
+											navigate(`/starships/${data.id}`, { state: { message: `${data.name}` } });
+											}}
+										>
+											Read more
+										</Button>
+									</Card.Body>
+								</Card>
+							</Col>
 						))}
-					</ListGroup>
+					</Row>
 
 					<Pagination
 						page={resource.current_page}

@@ -3,8 +3,12 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { SW_Starship } from '../../types'
 import { getResourceById } from '../../services/StarWarsAPI'
+import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
+import Col from 'react-bootstrap/Col'
+import Card from 'react-bootstrap/Card'
 import ListGroup from 'react-bootstrap/ListGroup'
+import Row from 'react-bootstrap/Row'
 import Spinner from 'react-bootstrap/Spinner'
 import ReturnButton from '../../components/ReturnButton'
 
@@ -18,12 +22,12 @@ const StarshipPage = () => {
 	const resourceId = Number(id)
 
     const getStarship = async (id: number) => {
+        setError(null)
 		setLoading(true)
 
         try {
             const data = await getResourceById<SW_Starship|null>('/starships', id)
             setResource(data)
-            console.log(data)
         } catch (err: any) {
             setError(err.message)
         }
@@ -44,6 +48,8 @@ const StarshipPage = () => {
 
             <h1>{location?.state.message}</h1>
 
+            { error && <Alert variant="warning">{error}</Alert>}
+
             { loading && 
 				<Spinner animation="border" role="status" variant="light">
 					<span className="visually-hidden">Loading...</span>
@@ -52,21 +58,18 @@ const StarshipPage = () => {
 
             { !loading && resource && (
                 <div id="resource">
-                        <ListGroup className="mb-3">
-                                <ListGroup.Item
-                                    className="mb-3"
-                                >
-                                    <p className=""><strong>Crew:</strong> {resource.crew}</p>
-                                    <p className=""><strong>Model:</strong> {resource.model}</p>
-                                    <p className=""><strong>Starship class:</strong> {resource.starship_class}</p>
-                                    <p className=""><strong>Cargo capacity:</strong> {resource.cargo_capacity}</p>
-                                    <ListGroup className="mb-3">
-                                    <p><strong>Films:</strong></p>
-                                    {resource.films.map(data => (
-                                        <ListGroup.Item
-                                            key={data.id}
-                                        >
-                                            <h2 className="h3">{data.title}</h2>
+                    <Row>
+                        <Col key={resource.id} xs={12} md={6} lg={12} className="mb-3">
+                            <Card>
+                                <Card.Body>
+                                    <Card.Title>{resource.name}</Card.Title>
+                                    <Card.Text><strong>Created:</strong> {resource.created}</Card.Text>
+                                    <Card.Text><strong>Model:</strong> {resource.model}</Card.Text>   
+                                    <Card.Text><strong>Films:</strong></Card.Text>                              
+                                    <ListGroup className="mb-3 d-flex flex-row flex-wrap">
+                                        {resource.films.map(data => (
+                                            <ListGroup.Item key={data.id} className="col-12 col-lg-4">
+                                            <p>{data.title}</p>
                                             <Button
                                                 className="my-3"
                                                 variant="dark"
@@ -74,27 +77,29 @@ const StarshipPage = () => {
                                             >
                                                     Read more
                                             </Button>
-                                        </ListGroup.Item>
-                                    ))}
-                                    <p><strong>Pilots:</strong></p>
-                                    {resource.pilots.map(data => (
-                                        <ListGroup.Item
-                                            key={data.id}
-                                        >
-                                            <h2 className="h3">{data.name}</h2>
-                                            <Button
-                                                className="my-3"
-                                                variant="dark"
-                                                onClick={() => { navigate(`/people/${data.id}`, { state: { message: `${data.name}` } })}}
-                                            >
-                                                    Read more
-                                            </Button>
-                                        </ListGroup.Item>
-                                    ))}
-                                </ListGroup>
-                            </ListGroup.Item>
-                        </ListGroup>
-                    </div>
+                                            </ListGroup.Item>
+                                        ))}
+                                        </ListGroup>
+                                        <Card.Text><strong>Pilots:</strong></Card.Text>  
+                                        <ListGroup className="mb-3 d-flex flex-row flex-wrap">
+                                            {resource.pilots.map(data => (
+                                                <ListGroup.Item key={data.id} className="col-12 col-lg-4">
+                                                <p>{data.name}</p>
+                                                <Button
+                                                    className="my-3"
+                                                    variant="dark"
+                                                    onClick={() => { navigate(`/people/${data.id}`, { state: { message: `${data.name}` } })}}
+                                                >
+                                                        Read more
+                                                </Button>
+                                            </ListGroup.Item>
+                                        ))}
+                                    </ListGroup>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
+                </div>
             )}
         </>
     )

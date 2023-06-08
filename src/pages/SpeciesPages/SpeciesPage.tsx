@@ -99,7 +99,6 @@ const SpeciesPage = () => {
 
 			{ error && <Alert variant="warning">{error}</Alert>}
 
-
 			{ !loading && searchInput.length > 0 && searchResult && (
 				<div id="search-result">
 					<p>There are {searchResult.data.length} search results for "{query}"</p>
