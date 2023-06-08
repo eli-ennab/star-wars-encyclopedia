@@ -9,8 +9,8 @@ body {
 	background-size: cover;
 	background-repeat: no-repeat; 
 	background-position: center center;
-	width: 100vw;
-	height: 100vh;
+	min-width: 100vw;
+	min-height: 100vh;
 	color: whitesmoke;
 	font-family: 'Encode Sans', sans-serif;
 }
@@ -58,6 +58,7 @@ button {
 .header-title {
 	-webkit-text-fill-color: transparent;
 	-webkit-text-stroke: 1px;
+	color: #FFE81F;
 }
 
 .category-title {
