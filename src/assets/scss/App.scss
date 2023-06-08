@@ -1,6 +1,5 @@
-@import "bootstrap/scss/bootstrap";
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@300&display=swap');
+@import 'bootstrap/scss/bootstrap';
+@import 'config';
 
 body {
 	background-color: rgb(25, 25, 25);
@@ -11,17 +10,17 @@ body {
 	background-position: center center;
 	min-width: 100vw;
 	min-height: 100vh;
-	color: whitesmoke;
+	color: $white;
 	font-family: 'Encode Sans', sans-serif;
 }
 
 nav {
-	background-color: black;
-	border-bottom: 1px dotted whitesmoke;
+	background-color: $sw-black;
+	border-bottom: 1px dotted $white;
 }
 
 .btn {
-	background-color: black;
+	background-color: $sw-black;
 }
 
 .list-group-item {
@@ -30,7 +29,7 @@ nav {
 
 svg {
 	stroke-width: 2;
-	color: #FFE81F;
+	color: $sw-yellow;
 }
 
 /**
@@ -63,13 +62,13 @@ button {
 .header-title {
 	-webkit-text-fill-color: transparent;
 	-webkit-text-stroke: 1px;
-	color: #FFE81F;
+	color: $sw-yellow;
 }
 
 .category-title {
-	color: whitesmoke;
+	color: $white;
 }
 
 .active {
-	border-bottom: .5px dotted whitesmoke;
+	border-bottom: .5px dotted $white;
 }
