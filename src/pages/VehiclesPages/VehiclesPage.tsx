@@ -3,12 +3,14 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { getResourcesByPage, searchVehicles } from '../../services/StarWarsAPI'
 import { SW_VehiclesResponse } from '../../types'
+import LoadingSpinner from '../../components/LoadingSpinner'
 import Pagination from '../../components/Pagination'
 import Search from '../../components/Search'
 import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
-import ListGroup from 'react-bootstrap/ListGroup'
-import Spinner from 'react-bootstrap/Spinner'
+import Card from 'react-bootstrap/Card'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 
 const VehiclesPage = () => {
 	const [error, setError] = useState<string|null>(null)
@@ -20,7 +22,6 @@ const VehiclesPage = () => {
 	const [searchParams, setSearchParams] = useSearchParams()
 	const navigate = useNavigate()
 
-	// get "search=" from URL Search Params
 	const query = searchParams.get('search') as string
 
 	const getVehicles = async (endpoint: string, page = 1) => {
@@ -60,17 +61,13 @@ const VehiclesPage = () => {
 			return
 		}
 
-		// reset page state
 		setPage(1)
 
-		// set input value as search in searchParams
 		setSearchParams( { search: searchInput } )
 
-		// search
 		searchSWVehicles(searchInput, 1)
 	}
 
-	// react to changes in page state
 	useEffect(() => {
 		if (!query) {
 			return
@@ -86,11 +83,9 @@ const VehiclesPage = () => {
 		<>
 			<h1><span className="header-title">Star Wars /</span> <span className="category-title">Vehicles</span></h1>
 
-			{ loading && 
-				<Spinner animation="border" role="status" variant="light">
-					<span className="visually-hidden">Loading...</span>
-				</Spinner>
-			}
+			{ error && <Alert variant="warning">{error}</Alert>}
+
+			{ loading && <LoadingSpinner /> }
 
 			{ !loading && 
 				<Search
@@ -100,55 +95,54 @@ const VehiclesPage = () => {
 				/>
 			}
 
-			{ !loading && error && <Alert variant="secondary">{error}</Alert>}
-
-
 			{ !loading && searchInput.length > 0 && searchResult && (
 				<div id="search-result">
 					<p>There are {searchResult.data.length} search results for "{query}"</p>
-
-					<ListGroup className="mb-3">
-						{searchResult.data.map(data => (
-							<ListGroup.Item
-								key={data.id}
-							>
-								<h2 className="h3">{data.name}</h2>
-								<Button
-									className="my-3"
-									variant="dark"
-									onClick={() => { navigate(`/species/${data.id}`, { state: { message: `${data.name}` } })}}
-								>
-										Read more
-								</Button>
-							</ListGroup.Item>
-						))}
-					</ListGroup>
+						<Row>
+							{searchResult.data.map(data => (
+								<Col key={data.id} xs={12} md={6} lg={4} className="mb-3">
+									<Card>
+										<Card.Body>
+											<Card.Title>{data.name}</Card.Title>
+											<Card.Text>{data.created}</Card.Text>
+											<Button
+												className="my-3"
+												variant="dark"
+												onClick={() => { navigate(`/species/${data.id}`, { state: { message: `${data.name}` } })}}
+											>
+													Read more
+											</Button>
+										</Card.Body>
+									</Card>
+								</Col>
+							))}
+						</Row>
 				</div>
 			)}
 
 			{ !loading && !searchInput && resource && (
 			<div id="resource">
 					<p>{resource.total} hits</p>
-
-					<ListGroup className="mb-3">
+					<Row>
 						{resource?.data.map(data => (
-							<ListGroup.Item
-								// action
-								className="mb-3"
-								// href={}
-								key={data.id}
-							>
-								<h2 className="h3">{data.name}</h2>
-								<Button
-									className="my-3"
-									variant="dark"
-									onClick={() => { navigate(`/species/${data.id}`, { state: { message: `${data.name}` } })}}
-								>
-										Read more
-								</Button>
-							</ListGroup.Item>
+							<Col key={data.id} xs={12} md={6} lg={4} className="mb-3">
+								<Card>
+									<Card.Body>
+										<Card.Title>{data.name}</Card.Title>
+										<Card.Text>{data.created}</Card.Text>
+										<Button
+											variant="dark"
+											onClick={() => {
+											navigate(`/vehicles/${data.id}`, { state: { message: `${data.name}` } });
+											}}
+										>
+											Read more
+										</Button>
+									</Card.Body>
+								</Card>
+							</Col>
 						))}
-					</ListGroup>
+					</Row>
 
 					<Pagination
 						page={resource.current_page}
