@@ -82,6 +82,8 @@ const PeoplePage = () => {
 		<>
 			<h1><span className="header-title">Star Wars /</span> <span className="category-title">People</span></h1>
 
+            { error && <Alert variant="warning">{error}</Alert>}
+
 			{ loading && <LoadingSpinner /> }
 
 			{ !loading && 
@@ -91,8 +93,6 @@ const PeoplePage = () => {
 					onSubmit={handleSubmit}
 				/>
 			}
-
-			{ !loading && error && <Alert variant="secondary">{error}</Alert>}
 
 			{ !loading && searchInput.length > 0 && searchResult && (
 				<div id="search-result">
