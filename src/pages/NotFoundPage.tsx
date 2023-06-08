@@ -14,7 +14,7 @@ const NotFoundPage = () => {
 
             <Button
                 variant="dark"
-                className="m-2"
+                className="my-2"
                 onClick={() => navigateBack()}
                 >
                     Return to home page
