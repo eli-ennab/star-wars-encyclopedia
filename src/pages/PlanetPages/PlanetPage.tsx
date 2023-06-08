@@ -28,7 +28,6 @@ const PlanetPage = () => {
         try {
             const data = await getResourceById<SW_Planet|null>('/planets', id)
             setResource(data)
-            console.log(data)
         } catch (err: any) {
             setError(err.message)
         }
@@ -81,6 +80,7 @@ const PlanetPage = () => {
                                             </ListGroup.Item>
                                         ))}
                                         </ListGroup>
+                                        <Card.Text><strong>Residents:</strong></Card.Text>   
                                         <ListGroup className="mb-3 d-flex flex-row flex-wrap">
                                             {resource.residents.map(data => (
                                                 <ListGroup.Item key={data.id} className="col-12 col-lg-4">

@@ -3,8 +3,12 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { SW_Specie } from '../../types'
 import { getResourceById } from '../../services/StarWarsAPI'
+import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
+import Col from 'react-bootstrap/Col'
+import Card from 'react-bootstrap/Card'
 import ListGroup from 'react-bootstrap/ListGroup'
+import Row from 'react-bootstrap/Row'
 import Spinner from 'react-bootstrap/Spinner'
 import ReturnButton from '../../components/ReturnButton'
 
@@ -18,12 +22,12 @@ const SpeciePage = () => {
 	const resourceId = Number(id)
 
     const getSpecie = async (id: number) => {
+        setError(null)
 		setLoading(true)
 
         try {
             const data = await getResourceById<SW_Specie|null>('/species', id)
             setResource(data)
-            console.log(data)
         } catch (err: any) {
             setError(err.message)
         }
@@ -44,6 +48,8 @@ const SpeciePage = () => {
 
             <h1>{location?.state.message}</h1>
 
+            { error && <Alert variant="warning">{error}</Alert>}
+
             { loading && 
 				<Spinner animation="border" role="status" variant="light">
 					<span className="visually-hidden">Loading...</span>
@@ -52,21 +58,18 @@ const SpeciePage = () => {
 
             { !loading && resource && (
                 <div id="resource">
-                        <ListGroup className="mb-3">
-                                <ListGroup.Item
-                                    className="mb-3"
-                                >
-                                    <p className=""><strong>Classification:</strong> {resource.classification}</p>
-                                    <p className=""><strong>Designation:</strong> {resource.designation}</p>
-                                    <p className=""><strong>Average lifespan:</strong> {resource.average_lifespan}</p>
-                                    <p className=""><strong>Language:</strong> {resource.language}</p>
-                                    <ListGroup className="mb-3">
-                                    <p><strong>Films:</strong></p>
-                                    {resource.films.map(data => (
-                                        <ListGroup.Item
-                                            key={data.id}
-                                        >
-                                            <h2 className="h3">{data.title}</h2>
+                    <Row>
+                        <Col key={resource.id} xs={12} md={6} lg={12} className="mb-3">
+                            <Card>
+                                <Card.Body>
+                                    <Card.Title>{resource.name}</Card.Title>
+                                    <Card.Text><strong>Created:</strong> {resource.created}</Card.Text>
+                                    <Card.Text><strong>Designation:</strong> {resource.designation}</Card.Text>   
+                                    <Card.Text><strong>Films:</strong></Card.Text>                              
+                                    <ListGroup className="mb-3 d-flex flex-row flex-wrap">
+                                        {resource.films.map(data => (
+                                            <ListGroup.Item key={data.id} className="col-12 col-lg-4">
+                                            <p>{data.title}</p>
                                             <Button
                                                 className="my-3"
                                                 variant="dark"
@@ -74,26 +77,28 @@ const SpeciePage = () => {
                                             >
                                                     Read more
                                             </Button>
-                                        </ListGroup.Item>
-                                    ))}
-                                    <p><strong>People:</strong></p>
-                                    {resource.people.map(data => (
-                                        <ListGroup.Item
-                                            key={data.id}
-                                        >
-                                            <h2 className="h3">{data.name}</h2>
-                                            <Button
-                                                className="my-3"
-                                                variant="dark"
-                                                onClick={() => { navigate(`/people/${data.id}`, { state: { message: `${data.name}` } })}}
-                                            >
-                                                    Read more
-                                            </Button>
-                                        </ListGroup.Item>
-                                    ))}
-                                </ListGroup>
-                            </ListGroup.Item>
-                        </ListGroup>
+                                            </ListGroup.Item>
+                                        ))}
+                                        </ListGroup>
+                                        <Card.Text><strong>People:</strong></Card.Text>  
+                                        <ListGroup className="mb-3 d-flex flex-row flex-wrap">
+                                            {resource.people.map(data => (
+                                                <ListGroup.Item key={data.id} className="col-12 col-lg-4">
+                                                <p>{data.name}</p>
+                                                <Button
+                                                    className="my-3"
+                                                    variant="dark"
+                                                    onClick={() => { navigate(`/people/${data.id}`, { state: { message: `${data.name}` } })}}
+                                                >
+                                                        Read more
+                                                </Button>
+                                                </ListGroup.Item>
+                                            ))}
+                                        </ListGroup>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                        </Row>
                     </div>
             )}
         </>
