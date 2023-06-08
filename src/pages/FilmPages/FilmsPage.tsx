@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { getResourcesByPage, searchFilms } from '../../services/StarWarsAPI'
 import { SW_FilmsResponse } from '../../types'
+import LoadingSpinner from '../../components/LoadingSpinner'
 import Pagination from '../../components/Pagination'
 import Search from '../../components/Search'
 import Alert from 'react-bootstrap/Alert'
@@ -10,7 +11,6 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import Spinner from 'react-bootstrap/Spinner'
 
 const FilmsPage = () => {
 	const [error, setError] = useState<string|null>(null)
@@ -68,26 +68,24 @@ const FilmsPage = () => {
 	}
 
 	useEffect(() => {
-		if (!query) {
-			return
+		if (query) {
+			searchSWFilms(query, page)
 		}
-
-		searchSWFilms(query, page)
+		
+		getFilms(query, page)
+		setSearchResult(null)
 	}, [page, query])
 
-	useEffect(() => {
-		getFilms(query, page)
-	}, [query, page])
+	// useEffect(() => {
+	// }, [query, page])
 
 	return (
 		<>
 			<h1><span className="header-title">Star Wars /</span> <span className="category-title">Films</span></h1>
 
-			{ loading && 
-				<Spinner animation="border" role="status" variant="light">
-					<span className="visually-hidden">Loading...</span>
-				</Spinner>
-			}
+            { error && <Alert variant="warning">{error}</Alert>}
+
+			{ loading && <LoadingSpinner /> }
 
 			{ !loading && 
 				<Search
@@ -96,8 +94,6 @@ const FilmsPage = () => {
 					onSubmit={handleSubmit}
 				/>
 			}
-
-			{ error && <Alert variant="warning">{error}</Alert>}
 
 			{ !loading && searchInput.length > 0 && searchResult && (
 				<div id="search-result">
@@ -124,7 +120,7 @@ const FilmsPage = () => {
 				</div>
 			)}
 
-			{ !loading && !searchInput && resource && (
+			{ !loading && searchResult === null && resource && (
 			<div id="resource">
 					<p>{resource.total} hits</p>
 					<Row>
