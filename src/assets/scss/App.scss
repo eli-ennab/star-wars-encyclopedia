@@ -59,6 +59,12 @@ button {
 	letter-spacing: .18rem;
 }
 
+.navbar-header {
+	font-size: 1rem;
+	border-top: 1px dotted $sw-yellow;
+	border-bottom: 1px dotted $sw-yellow;
+}
+
 .header-title {
 	-webkit-text-fill-color: transparent;
 	-webkit-text-stroke: 1px;
@@ -70,5 +76,5 @@ button {
 }
 
 .active {
-	border-bottom: .5px dotted $white;
+	border-bottom: 1px dotted $sw-yellow;
 }
