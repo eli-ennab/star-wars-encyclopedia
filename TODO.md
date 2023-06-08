@@ -11,7 +11,7 @@
   - [ ] Create dropdown for resources (for example all characters, https://react-bootstrap.github.io/docs/components/dropdowns)
 
 ### In Progress
-
+- [ ] Make sure page=x is in the URL
 - [ ] Error handling
 - [ ] Pagination for search (if neccessary?)
 - [ ] Pagination using query parameters (should survive page reloads and navigation via browser back/forward buttons)
