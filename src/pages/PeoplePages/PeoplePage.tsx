@@ -19,9 +19,10 @@ const PeoplePage = () => {
 	const [page, setPage] = useState(1)
 	const [searchInput, setSearchInput] = useState("")
 	const [searchResult, setSearchResult] = useState<SW_PeopleResponse|null>(null)
-	const [searchParams, setSearchParams] = useSearchParams()
+	const [searchParams, setSearchParams] = useSearchParams("")
 	const navigate = useNavigate()
 	const query = searchParams.get('search') as string
+	// const paramPage = searchParams.get('page') as string
 
 	const getPeople = async (_endpoint: string, currentPage = 1) => {
 		setError(null)
@@ -72,11 +73,17 @@ const PeoplePage = () => {
 		searchSWPeople(searchInput)
 	}
 
+
 	useEffect(() => {
 		if (!query) {
+			setSearchInput("")
+			setSearchParams("")
 			getPeople(query, page)
 		}
-		searchSWPeople(query)
+
+		if (query !== null) {
+			searchSWPeople(query)
+		}
 	}, [query, page])
 
 	return (
@@ -123,7 +130,7 @@ const PeoplePage = () => {
 
 			<hr></hr>
 
-			{ !loading && resource && (
+			{ !loading && !searchInput && resource && (
 			<div id="resource">
 					<p>{resource.total} hits</p>
 					<Row>
