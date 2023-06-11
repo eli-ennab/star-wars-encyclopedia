@@ -61,7 +61,7 @@ const PlanetPage = () => {
                                     <Card.Title>{resource.name}</Card.Title>
                                     <Card.Text><strong>Created:</strong> {resource.created}</Card.Text>
                                     <Card.Text><strong>Terrain:</strong> {resource.terrain}</Card.Text>   
-                                    <Card.Text><strong>Characters:</strong></Card.Text>                              
+                                    <Card.Text><strong>Films:</strong></Card.Text>                              
                                     <ListGroup className="mb-3 d-flex flex-row flex-wrap">
                                         {resource.films.map(data => (
                                             <ListGroup.Item key={data.id} className="col-12 col-lg-4">
