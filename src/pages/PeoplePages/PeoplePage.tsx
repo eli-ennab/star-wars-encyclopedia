@@ -23,14 +23,19 @@ const PeoplePage = () => {
 	const navigate = useNavigate()
 	const query = searchParams.get('search') as string
 
-	const getPeople = async (endpoint: string, page = 1) => {
+	const getPeople = async (_endpoint: string, currentPage = 1) => {
 		setError(null)
 		setLoading(true)
 		setResource(null)
-
+		
 		try {
-			const data = await getResourcesByPage<SW_PeopleResponse|null>('/people', page)
+			const data = await getResourcesByPage<SW_PeopleResponse|null>('/people', currentPage)
 			setResource(data)
+
+			if(!searchInput) {
+				setSearchParams(`?page=${data?.current_page}`)
+			}
+			
 		} catch (err: any) {
 			setError(err.message)
 		}
@@ -38,13 +43,13 @@ const PeoplePage = () => {
 		setLoading(false)
 	}
 
-	const searchSWPeople = async (searchQuery: string, searchPage = 1) => {
+	const searchSWPeople = async (searchQuery: string) => {
 		setError(null)
 		setLoading(true)
 		setSearchResult(null)
 
 		try {
-			const data = await searchPeople(searchQuery, searchPage)
+			const data = await searchPeople(searchQuery)
 			setSearchResult(data)
 		} catch (err: any) {
 			setError(err.message)
@@ -64,18 +69,14 @@ const PeoplePage = () => {
 
 		setSearchParams( { search: searchInput } )
 
-		searchSWPeople(searchInput, 1)
+		searchSWPeople(searchInput)
 	}
 
 	useEffect(() => {
 		if (!query) {
-			return
+			getPeople(query, page)
 		}
-		searchSWPeople(query, page)
-	}, [page, query])
-
-	useEffect(() => {
-		getPeople(query, page)
+		searchSWPeople(query)
 	}, [query, page])
 
 	return (
@@ -96,7 +97,8 @@ const PeoplePage = () => {
 
 			{ !loading && searchInput.length > 0 && searchResult && (
 				<div id="search-result">
-					<p>There are {searchResult.data.length} search results for "{query}"</p>
+					{searchResult.data.length > 0 ? <p>There are {searchResult.data.length} search results for "{query}"</p> : <p>No data found.</p>}
+					
 					<Row>
 						{searchResult.data.map(data => (
 							<Col key={data.id} xs={12} md={6} lg={4} className="mb-3">
@@ -119,7 +121,9 @@ const PeoplePage = () => {
 				</div>
 			)}
 
-			{ !loading && !searchInput && resource && (
+			<hr></hr>
+
+			{ !loading && resource && (
 			<div id="resource">
 					<p>{resource.total} hits</p>
 					<Row>
