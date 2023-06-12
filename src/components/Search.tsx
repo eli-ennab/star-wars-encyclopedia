@@ -12,7 +12,7 @@ const Search: React.FC<IProps> = ( { value, onChange, onSubmit } ) => {
         <>
             <Form className="mb-4" onSubmit={onSubmit}>
 				<Form.Group className="mb-3" controlId="searchQuery">
-					<Form.Label>Search a specific resource</Form.Label>
+					<Form.Label>Search</Form.Label>
 					<Form.Control
 						onChange={onChange}
 						placeholder="Enter your search"
