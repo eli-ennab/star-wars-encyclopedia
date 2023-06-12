@@ -14,23 +14,23 @@ import Row from 'react-bootstrap/Row'
 
 const FilmsPage = () => {
 	const [error, setError] = useState<string|null>(null)
-	const [loading, setLoading] = useState(true)
-	const [resource, setResource] = useState<SW_FilmsResponse|null>(null)
-	const [page, setPage] = useState(1)
+	const [loading, setLoading] = useState(false)
 	const [searchInput, setSearchInput] = useState("")
-	const [searchResult, setSearchResult] = useState<SW_FilmsResponse|null>(null)
-	const [searchParams, setSearchParams] = useSearchParams()
+	const [result, setResult] = useState<SW_FilmsResponse|null>(null)
+	const [searchParams, setSearchParams] = useSearchParams("")
 	const navigate = useNavigate()
-	const query = searchParams.get('search') as string
+	const paramSearch = searchParams.get('search') as string
+	const paramPage = searchParams.get('page') as string
 
-	const getFilms = async (endpoint: string, page = 1) => {
+	const getFilms = async (_endpoint: string) => {
 		setError(null)
 		setLoading(true)
-		setResource(null)
-
+		setResult(null)
+		setSearchInput("")
+		
 		try {
-			const data = await getResourcesByPage<SW_FilmsResponse|null>('/films', page)
-			setResource(data)
+			const data = await getResourcesByPage<SW_FilmsResponse|null>('/films', Number(paramPage))
+			setResult(data)	
 		} catch (err: any) {
 			setError(err.message)
 		}
@@ -38,14 +38,14 @@ const FilmsPage = () => {
 		setLoading(false)
 	}
 
-	const searchSWFilms = async (searchQuery: string, searchPage = 1) => {
+	const searchSWFilms = async (searchQuery: string) => {
 		setError(null)
 		setLoading(true)
-		setSearchResult(null)
+		setResult(null)
 
 		try {
-			const data = await searchFilms(searchQuery, searchPage)
-			setSearchResult(data)
+			const data = await searchFilms(searchQuery, Number(paramPage))
+			setResult(data)
 		} catch (err: any) {
 			setError(err.message)
 		}
@@ -60,24 +60,21 @@ const FilmsPage = () => {
 			return
 		}
 
-		setPage(1)
+		setSearchParams( { search: searchInput, page: paramPage } )
 
-		setSearchParams( { search: searchInput } )
-
-		searchSWFilms(searchInput, 1)
+		searchSWFilms(searchInput)
 	}
 
-	useEffect(() => {
-		if (query) {
-			searchSWFilms(query, page)
-		}
-		
-		getFilms(query, page)
-		setSearchResult(null)
-	}, [page, query])
 
-	// useEffect(() => {
-	// }, [query, page])
+	useEffect(() => {
+		if (!paramSearch) {
+			getFilms(paramSearch)
+		}
+
+		if (paramSearch !== null) {
+			searchSWFilms(paramSearch)
+		}
+	}, [paramSearch, paramPage])
 
 	return (
 		<>
@@ -87,7 +84,7 @@ const FilmsPage = () => {
 
 			{ loading && <LoadingSpinner /> }
 
-			{ !loading && 
+			{ !loading && !error &&
 				<Search
 					value={searchInput}
 					onChange={e => setSearchInput(e.target.value)}
@@ -95,20 +92,21 @@ const FilmsPage = () => {
 				/>
 			}
 
-			{ !loading && searchInput.length > 0 && searchResult && (
-				<div id="search-result">
-					<p>There are {searchResult.data.length} search results for "{query}"</p>
+			{ !loading && !error && result && (
+				<div id="result">
+					{result.data.length > 0 && paramSearch ? <p>{result.total} search results for "{paramSearch}"</p> : <p>{result.total} results</p>}
+					
 					<Row>
-						{searchResult.data.map(data => (
+						{result.data.map(data => (
 							<Col key={data.id} xs={12} md={6} lg={4} className="mb-3">
 								<Card>
 									<Card.Body>
 										<Card.Title>{data.title}</Card.Title>
-										<Card.Text>{data.release_date}</Card.Text>
+										<Card.Text>{data.created}</Card.Text>
 										<Button
 											className="my-3"
 											variant="dark"
-											onClick={() => { navigate(`/films/${data.id}`, { state: { message: `${data.title}` } })}}
+											onClick={() => { navigate(`/people/${data.id}`, { state: { message: `${data.title}` } })}}
 										>
 												Read more
 										</Button>
@@ -117,43 +115,18 @@ const FilmsPage = () => {
 							</Col>
 						))}
 					</Row>
-				</div>
-			)}
-
-			{ !loading && searchResult === null && resource && (
-			<div id="resource">
-					<p>{resource.total} hits</p>
-					<Row>
-						{resource?.data.map(data => (
-							<Col key={data.id} xs={12} md={6} lg={4} className="mb-3">
-								<Card>
-									<Card.Body>
-										<Card.Title>{data.title}</Card.Title>
-										<Card.Text>{data.release_date}</Card.Text>
-										<Button
-											variant="dark"
-											onClick={() => {
-											navigate(`/films/${data.id}`, { state: { message: `${data.title}` } });
-											}}
-										>
-											Read more
-										</Button>
-									</Card.Body>
-								</Card>
-							</Col>
-						))}
-					</Row>
 
 					<Pagination
-						page={resource.current_page}
-						totalPages={resource.last_page}
-						hasPreviousPage={page < 1}
-						hasNextPage={page > resource.last_page}
-						onPreviousPage={() => {setPage(prevValue => prevValue - 1)}}
-						onNextPage={() => {setPage(prevValue => prevValue + 1)}}
-					/>
+						page={result.current_page}
+						totalPages={result.last_page}
+						hasPreviousPage={Number(paramPage) > 1}
+						hasNextPage={Number(paramPage) < result.last_page}
+						onPreviousPage={() => {paramSearch ? setSearchParams(	{ search: paramSearch, page: (Number(paramPage) - 1).toString() }) : setSearchParams( { page: (Number(paramPage) - 1).toString() })}}
+						onNextPage={() => {paramSearch ? setSearchParams(	{ search: paramSearch, page: (Number(paramPage) + 1).toString() }) : setSearchParams( { page: (Number(paramPage) + 1).toString() })}}
+						/>
 				</div>
 			)}
+
 		</>
 	)
 }

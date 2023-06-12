@@ -94,7 +94,7 @@ const PeoplePage = () => {
 
 			{ !loading && !error && result && (
 				<div id="result">
-					{result.data.length > 0 && paramSearch ? <p>{result.total} search results for "{paramSearch}"</p> : <p>All results</p>}
+					{result.data.length > 0 && paramSearch ? <p>{result.total} search results for "{paramSearch}"</p> : <p>{result.total} results</p>}
 					
 					<Row>
 						{result.data.map(data => (

@@ -14,24 +14,23 @@ import Row from 'react-bootstrap/Row'
 
 const VehiclesPage = () => {
 	const [error, setError] = useState<string|null>(null)
-	const [loading, setLoading] = useState(true)
-	const [resource, setResource] = useState<SW_VehiclesResponse|null>(null)
-	const [page, setPage] = useState(1)
+	const [loading, setLoading] = useState(false)
 	const [searchInput, setSearchInput] = useState("")
-	const [searchResult, setSearchResult] = useState<SW_VehiclesResponse|null>(null)
-	const [searchParams, setSearchParams] = useSearchParams()
+	const [result, setResult] = useState<SW_VehiclesResponse|null>(null)
+	const [searchParams, setSearchParams] = useSearchParams("")
 	const navigate = useNavigate()
+	const paramSearch = searchParams.get('search') as string
+	const paramPage = searchParams.get('page') as string
 
-	const query = searchParams.get('search') as string
-
-	const getVehicles = async (endpoint: string, page = 1) => {
+	const getVehicles = async (_endpoint: string) => {
 		setError(null)
 		setLoading(true)
-		setResource(null)
-
+		setResult(null)
+		setSearchInput("")
+		
 		try {
-			const data = await getResourcesByPage<SW_VehiclesResponse|null>('/vehicles', page)
-			setResource(data)
+			const data = await getResourcesByPage<SW_VehiclesResponse|null>('/vehicles', Number(paramPage))
+			setResult(data)	
 		} catch (err: any) {
 			setError(err.message)
 		}
@@ -39,14 +38,14 @@ const VehiclesPage = () => {
 		setLoading(false)
 	}
 
-	const searchSWVehicles = async (searchQuery: string, searchPage = 1) => {
+	const searchSWVehicles = async (searchQuery: string) => {
 		setError(null)
 		setLoading(true)
-		setSearchResult(null)
+		setResult(null)
 
 		try {
-			const data = await searchVehicles(searchQuery, searchPage)
-			setSearchResult(data)
+			const data = await searchVehicles(searchQuery, Number(paramPage))
+			setResult(data)
 		} catch (err: any) {
 			setError(err.message)
 		}
@@ -61,33 +60,31 @@ const VehiclesPage = () => {
 			return
 		}
 
-		setPage(1)
+		setSearchParams( { search: searchInput, page: paramPage } )
 
-		setSearchParams( { search: searchInput } )
-
-		searchSWVehicles(searchInput, 1)
+		searchSWVehicles(searchInput)
 	}
 
-	useEffect(() => {
-		if (!query) {
-			return
-		}
-		searchSWVehicles(query, page)
-	}, [page, query])
 
 	useEffect(() => {
-		getVehicles(query, page)
-	}, [query, page])
+		if (!paramSearch) {
+			getVehicles(paramSearch)
+		}
+
+		if (paramSearch !== null) {
+			searchSWVehicles(paramSearch)
+		}
+	}, [paramSearch, paramPage])
 
 	return (
 		<>
 			<h1><span className="header-title">Star Wars /</span> <span className="category-title">Vehicles</span></h1>
 
-			{ error && <Alert variant="warning">{error}</Alert>}
+            { error && <Alert variant="warning">{error}</Alert>}
 
 			{ loading && <LoadingSpinner /> }
 
-			{ !loading && 
+			{ !loading && !error &&
 				<Search
 					value={searchInput}
 					onChange={e => setSearchInput(e.target.value)}
@@ -95,48 +92,23 @@ const VehiclesPage = () => {
 				/>
 			}
 
-			{ !loading && searchInput.length > 0 && searchResult && (
-				<div id="search-result">
-					<p>There are {searchResult.data.length} search results for "{query}"</p>
-						<Row>
-							{searchResult.data.map(data => (
-								<Col key={data.id} xs={12} md={6} lg={4} className="mb-3">
-									<Card>
-										<Card.Body>
-											<Card.Title>{data.name}</Card.Title>
-											<Card.Text>{data.created}</Card.Text>
-											<Button
-												className="my-3"
-												variant="dark"
-												onClick={() => { navigate(`/species/${data.id}`, { state: { message: `${data.name}` } })}}
-											>
-													Read more
-											</Button>
-										</Card.Body>
-									</Card>
-								</Col>
-							))}
-						</Row>
-				</div>
-			)}
-
-			{ !loading && !searchInput && resource && (
-			<div id="resource">
-					<p>{resource.total} hits</p>
+			{ !loading && !error && result && (
+				<div id="result">
+					{result.data.length > 0 && paramSearch ? <p>{result.total} search results for "{paramSearch}"</p> : <p>{result.total} results</p>}
+					
 					<Row>
-						{resource?.data.map(data => (
+						{result.data.map(data => (
 							<Col key={data.id} xs={12} md={6} lg={4} className="mb-3">
 								<Card>
 									<Card.Body>
 										<Card.Title>{data.name}</Card.Title>
 										<Card.Text>{data.created}</Card.Text>
 										<Button
+											className="my-3"
 											variant="dark"
-											onClick={() => {
-											navigate(`/vehicles/${data.id}`, { state: { message: `${data.name}` } });
-											}}
+											onClick={() => { navigate(`/vehicles/${data.id}`, { state: { message: `${data.name}` } })}}
 										>
-											Read more
+												Read more
 										</Button>
 									</Card.Body>
 								</Card>
@@ -145,15 +117,16 @@ const VehiclesPage = () => {
 					</Row>
 
 					<Pagination
-						page={resource.current_page}
-						totalPages={resource.last_page}
-						hasPreviousPage={page > 1}
-						hasNextPage={page < resource.last_page}
-						onPreviousPage={() => {setPage(prevValue => prevValue - 1)}}
-						onNextPage={() => {setPage(prevValue => prevValue + 1)}}
-					/>
+						page={result.current_page}
+						totalPages={result.last_page}
+						hasPreviousPage={Number(paramPage) > 1}
+						hasNextPage={Number(paramPage) < result.last_page}
+						onPreviousPage={() => {paramSearch ? setSearchParams(	{ search: paramSearch, page: (Number(paramPage) - 1).toString() }) : setSearchParams( { page: (Number(paramPage) - 1).toString() })}}
+						onNextPage={() => {paramSearch ? setSearchParams(	{ search: paramSearch, page: (Number(paramPage) + 1).toString() }) : setSearchParams( { page: (Number(paramPage) + 1).toString() })}}
+						/>
 				</div>
 			)}
+
 		</>
 	)
 }
