@@ -60,7 +60,10 @@ const SpeciePage = () => {
                                 <Card.Body>
                                     <Card.Title>{resource.name}</Card.Title>
                                     <Card.Text><strong>Created:</strong> {resource.created}</Card.Text>
-                                    <Card.Text><strong>Designation:</strong> {resource.designation}</Card.Text>   
+                                    <Card.Text><strong>Designation:</strong> {resource.designation}</Card.Text>
+                                    <Card.Text><strong>Average lifespan:</strong> {resource.average_lifespan}</Card.Text>
+                                    <Card.Text><strong>Average height:</strong> {resource.average_height}</Card.Text>
+                                    <Card.Text><strong>Language:</strong> {resource.language}</Card.Text>   
                                     <Card.Text><strong>Films:</strong></Card.Text>                              
                                     <ListGroup className="mb-3 d-flex flex-row flex-wrap">
                                         {resource.films.map(data => (
@@ -91,11 +94,11 @@ const SpeciePage = () => {
                                                 </ListGroup.Item>
                                             ))}
                                         </ListGroup>
-                                    </Card.Body>
-                                </Card>
-                            </Col>
-                        </Row>
-                    </div>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
+                </div>
             )}
         </>
     )

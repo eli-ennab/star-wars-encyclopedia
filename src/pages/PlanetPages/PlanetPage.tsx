@@ -60,7 +60,10 @@ const PlanetPage = () => {
                                 <Card.Body>
                                     <Card.Title>{resource.name}</Card.Title>
                                     <Card.Text><strong>Created:</strong> {resource.created}</Card.Text>
-                                    <Card.Text><strong>Terrain:</strong> {resource.terrain}</Card.Text>   
+                                    <Card.Text><strong>Climate:</strong> {resource.climate}</Card.Text>
+                                    <Card.Text><strong>Gravity:</strong> {resource.gravity}</Card.Text>
+                                    <Card.Text><strong>Terrain:</strong> {resource.terrain}</Card.Text>
+                                    <Card.Text><strong>Population:</strong> {resource.population}</Card.Text>
                                     <Card.Text><strong>Films:</strong></Card.Text>                              
                                     <ListGroup className="mb-3 d-flex flex-row flex-wrap">
                                         {resource.films.map(data => (

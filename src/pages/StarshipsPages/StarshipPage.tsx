@@ -60,7 +60,9 @@ const StarshipPage = () => {
                                 <Card.Body>
                                     <Card.Title>{resource.name}</Card.Title>
                                     <Card.Text><strong>Created:</strong> {resource.created}</Card.Text>
-                                    <Card.Text><strong>Model:</strong> {resource.model}</Card.Text>   
+                                    <Card.Text><strong>Crew:</strong> {resource.crew}</Card.Text>
+                                    <Card.Text><strong>Manufacturer:</strong> {resource.manufacturer}</Card.Text> 
+                                    <Card.Text><strong>Model:</strong> {resource.model}</Card.Text>
                                     <Card.Text><strong>Films:</strong></Card.Text>                              
                                     <ListGroup className="mb-3 d-flex flex-row flex-wrap">
                                         {resource.films.map(data => (

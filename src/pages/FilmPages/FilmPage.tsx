@@ -59,6 +59,7 @@ const FilmPage = () => {
                             <Card>
                                 <Card.Body>
                                     <Card.Title>{resource.title}</Card.Title>
+                                    <Card.Text><strong>Created:</strong> {resource.created}</Card.Text> 
                                     <Card.Text><strong>Releasedate:</strong> {resource.release_date}</Card.Text>
                                     <Card.Text><strong>Opening crawl:</strong> {resource.opening_crawl}</Card.Text>   
                                     <Card.Text><strong>Characters:</strong></Card.Text>                              
