@@ -80,7 +80,7 @@ export const searchFilms = async (query: string, page = 1) => {
  * @returns Promise
  */
 export const searchPeople = async (query: string, page = 1) => {
-	return get<SW_PeopleResponse>(`people/?search=${query}`)
+	return get<SW_PeopleResponse>(`people/?search=${query}&page=${page}`)
 }
 
 /**
