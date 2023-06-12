@@ -51,6 +51,15 @@ a {
 	text-transform: uppercase;
 }
 
+.navbar-toggler-icon {
+	color: $white;
+}
+
+#intro-text {
+	background-color: $transparent-black;
+    padding: 1rem;
+}
+
 p,
 li,
 label,
