@@ -15,7 +15,6 @@ import Row from 'react-bootstrap/Row'
 const PeoplePage = () => {
 	const [error, setError] = useState<string|null>(null)
 	const [loading, setLoading] = useState(false)
-	// const [resource, setResource] = useState<SW_PeopleResponse|null>(null)
 	const [searchInput, setSearchInput] = useState("")
 	const [result, setResult] = useState<SW_PeopleResponse|null>(null)
 	const [searchParams, setSearchParams] = useSearchParams("")
@@ -27,15 +26,11 @@ const PeoplePage = () => {
 		setError(null)
 		setLoading(true)
 		setResult(null)
+		setSearchInput("")
 		
 		try {
 			const data = await getResourcesByPage<SW_PeopleResponse|null>('/people', Number(paramPage))
-			setResult(data)
-
-			if(!searchInput) {
-				setSearchParams({ page: paramPage })
-			}
-			
+			setResult(data)	
 		} catch (err: any) {
 			setError(err.message)
 		}
@@ -99,7 +94,7 @@ const PeoplePage = () => {
 
 			{ !loading && !error && result && (
 				<div id="result">
-					{result.data.length > 0 && paramSearch ? <p>There are {result.total} search results for "{paramSearch}"</p> : <p>All data.</p>}
+					{result.data.length > 0 && paramSearch ? <p>{result.total} search results for "{paramSearch}"</p> : <p>All results</p>}
 					
 					<Row>
 						{result.data.map(data => (
