@@ -2,12 +2,14 @@ import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import { NavLink, Link } from 'react-router-dom'
+import { FaGithub } from 'react-icons/fa'
 
 const Navigation = () => {
 	return (
 			<Navbar variant="dark" expand="md">
 				<Container>
 					<Navbar.Brand as={Link} to="/" className="navbar-header">Star Wars Encyclopedia</Navbar.Brand>
+					<Navbar.Brand as={Link} to="https://github.com/eli-ennab" target="_blank" className="px-2"><FaGithub /></Navbar.Brand>
 
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
