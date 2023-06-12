@@ -60,7 +60,7 @@ const StarshipsPage = () => {
 			return
 		}
 
-		setSearchParams( { search: searchInput, page: paramPage } )
+		setSearchParams( { search: searchInput, page: '1' } )
 
 		searchSWStarships(searchInput)
 	}

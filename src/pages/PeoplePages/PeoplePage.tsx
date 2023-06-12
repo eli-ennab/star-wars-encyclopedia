@@ -44,7 +44,7 @@ const PeoplePage = () => {
 		setResult(null)
 
 		try {
-			const data = await searchPeople(searchQuery, Number(paramPage))
+			const data = await searchPeople(searchQuery, 1)
 			setResult(data)
 		} catch (err: any) {
 			setError(err.message)
@@ -60,7 +60,7 @@ const PeoplePage = () => {
 			return
 		}
 
-		setSearchParams( { search: searchInput, page: paramPage } )
+		setSearchParams( { search: searchInput, page: '1' } )
 
 		searchSWPeople(searchInput)
 	}

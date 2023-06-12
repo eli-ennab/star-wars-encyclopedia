@@ -60,7 +60,7 @@ const FilmsPage = () => {
 			return
 		}
 
-		setSearchParams( { search: searchInput, page: paramPage } )
+		setSearchParams( { search: searchInput, page: '1' } )
 
 		searchSWFilms(searchInput)
 	}
