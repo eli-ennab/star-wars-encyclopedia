@@ -68,7 +68,7 @@ export const getResourceById = async <T>(endpoint: string, resource_id: number) 
  * @returns Promise
  */
 export const searchFilms = async (query: string, page = 1) => {
-	return get<SW_FilmsResponse>(`films/?search=${query}`)
+	return get<SW_FilmsResponse>(`films/?search=${query}&page=${page}`)
 }
 
 /**
@@ -92,7 +92,7 @@ export const searchPeople = async (query: string, page = 1) => {
  * @returns Promise
  */
 export const searchPlanets = async (query: string, page = 1) => {
-	return get<SW_PlanetsResponse>(`planets/?search=${query}`)
+	return get<SW_PlanetsResponse>(`planets/?search=${query}&page=${page}`)
 }
 
 /**
@@ -104,7 +104,7 @@ export const searchPlanets = async (query: string, page = 1) => {
  * @returns Promise
  */
 export const searchSpecies = async (query: string, page = 1) => {
-	return get<SW_SpeciesResponse>(`species/?search=${query}`)
+	return get<SW_SpeciesResponse>(`species/?search=${query}&page=${page}`)
 }
 
 /**
@@ -116,7 +116,7 @@ export const searchSpecies = async (query: string, page = 1) => {
  * @returns Promise
  */
 export const searchStarships = async (query: string, page = 1) => {
-	return get<SW_StarshipsResponse>(`starships/?search=${query}`)
+	return get<SW_StarshipsResponse>(`starships/?search=${query}&page=${page}`)
 }
 
 /**
@@ -128,5 +128,5 @@ export const searchStarships = async (query: string, page = 1) => {
  * @returns Promise
  */
 export const searchVehicles = async (query: string, page = 1) => {
-	return get<SW_VehiclesResponse>(`vehicles/?search=${query}`)
+	return get<SW_VehiclesResponse>(`vehicles/?search=${query}&page=${page}`)
 }
