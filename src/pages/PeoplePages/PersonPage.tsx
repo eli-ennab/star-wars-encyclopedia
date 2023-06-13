@@ -61,7 +61,6 @@ const PersonPage = () => {
                                     <Card.Title>{resource.name}</Card.Title>
                                     <Card.Text><strong>Birthyear:</strong> {resource.birth_year}</Card.Text>
                                     <Card.Text><strong>Created:</strong> {resource.created}</Card.Text>
-                                    <Card.Text><strong>Species:</strong> {resource.species}</Card.Text>
                                     <Card.Text><strong>Eyecolor:</strong> {resource.eye_color}</Card.Text>
                                     <Card.Text><strong>Skincolor:</strong> {resource.skin_color}</Card.Text> 
                                     <Card.Text><strong>Height:</strong> {resource.height}</Card.Text>
