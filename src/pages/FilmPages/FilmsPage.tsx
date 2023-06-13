@@ -102,7 +102,7 @@ const FilmsPage = () => {
 								<Card>
 									<Card.Body>
 										<Card.Title>{data.title}</Card.Title>
-										<Card.Text>{data.created}</Card.Text>
+										<Card.Text>Release date: {data.release_date}</Card.Text>
 										<Button
 											className="my-3"
 											variant="dark"

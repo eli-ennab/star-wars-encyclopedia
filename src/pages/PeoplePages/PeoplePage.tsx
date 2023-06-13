@@ -102,7 +102,6 @@ const PeoplePage = () => {
 								<Card>
 									<Card.Body>
 										<Card.Title>{data.name}</Card.Title>
-										<Card.Text>{data.created}</Card.Text>
 										<Button
 											className="my-3"
 											variant="dark"
