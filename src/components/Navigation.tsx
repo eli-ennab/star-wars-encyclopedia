@@ -14,12 +14,12 @@ const Navigation = () => {
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="ms-auto">
 							<Nav.Link as={Link} to="https://github.com/eli-ennab" target="_blank" className="px-2"><FaGithub /></Nav.Link>
-							<Nav.Link as={NavLink} end to="/films?page=1">Films</Nav.Link>
-							<Nav.Link as={NavLink} end to="/people?page=1">People</Nav.Link>
-							<Nav.Link as={NavLink} end to="/planets?page=1">Planets</Nav.Link>
-							<Nav.Link as={NavLink} end to="/species?page=1">Species</Nav.Link>
-							<Nav.Link as={NavLink} end to="/starships?page=1">Starships</Nav.Link>
-							<Nav.Link as={NavLink} end to="/vehicles?page=1">Vehicles</Nav.Link>
+							<Nav.Link as={NavLink} to="/films?page=1">Films</Nav.Link>
+							<Nav.Link as={NavLink} to="/people?page=1">People</Nav.Link>
+							<Nav.Link as={NavLink} to="/planets?page=1">Planets</Nav.Link>
+							<Nav.Link as={NavLink} to="/species?page=1">Species</Nav.Link>
+							<Nav.Link as={NavLink} to="/starships?page=1">Starships</Nav.Link>
+							<Nav.Link as={NavLink} to="/vehicles?page=1">Vehicles</Nav.Link>
 						</Nav>
 					</Navbar.Collapse>
 				</Container>
