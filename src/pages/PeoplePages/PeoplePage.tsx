@@ -119,8 +119,16 @@ const PeoplePage = () => {
 						totalPages={result.last_page}
 						hasPreviousPage={Number(paramPage) > 1}
 						hasNextPage={Number(paramPage) < result.last_page}
-						onPreviousPage={() => {paramSearch ? setSearchParams(	{ search: paramSearch, page: (Number(paramPage) - 1).toString() }) : setSearchParams( { page: (Number(paramPage) - 1).toString() })}}
-						onNextPage={() => {paramSearch ? setSearchParams(	{ search: paramSearch, page: (Number(paramPage) + 1).toString() }) : setSearchParams( { page: (Number(paramPage) + 1).toString() })}}
+						onPreviousPage={() => { paramSearch 
+												? setSearchParams(	{ search: paramSearch, page: (Number(paramPage) - 1).toString() }) 
+												: setSearchParams( { page: (Number(paramPage) - 1).toString() })
+											}
+										}
+						onNextPage={() => { paramSearch 
+											? setSearchParams(	{ search: paramSearch, page: (Number(paramPage) + 1).toString() }) 
+											: setSearchParams( { page: (Number(paramPage) + 1).toString() })
+										}
+									}
 						/>
 				</div>
 			)}
