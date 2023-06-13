@@ -5,21 +5,21 @@
 - [ ] Flawless indentation
 - [ ] Deploy to Netlify or GitHub Pages (pending)
 - [ ] CSS 
-  - [ ] Responsiveness
-  - [ ] Add a favicon
-  - [ ] Icons instead of button text
   - [ ] Implement dream loading spinner (https://mhnpd.github.io/react-loader-spinner/docs/components/infinity-spin)
   - [ ] Create dropdown for resources (for example all characters, https://react-bootstrap.github.io/docs/components/dropdowns)
 
 ### In Progress
-- [ ] Make sure page=x is in the URL
 - [ ] Create a getData-hook for all get /:resource
-- [ ] Error handling
-- [ ] Pagination for search (if neccessary?)
-- [ ] Pagination using query parameters (should survive page reloads and navigation via browser back/forward buttons)
 
 ### Completed
 
+- [x] Icons instead of button text
+- [x] Responsiveness
+- [x] Add a favicon
+- [x] Error handling
+- [x] Pagination for search (if neccessary?)
+- [x] Pagination using query parameters (should survive page reloads and navigation via browser back/forward buttons)
+- [x] Make sure page=x is in the URL
 - [x] Provide links, if needed, for the extra resources
 - [x] Search function on each extra resource
 - [x] Add extra resources (planets, species, starships, vehicles)
