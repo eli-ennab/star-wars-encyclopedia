@@ -78,7 +78,7 @@ const PlanetsPage = () => {
 
 	return (
 		<>
-			<h1><span className="header-title">Star Wars /</span> <span className="category-title">People</span></h1>
+			<h1><span className="header-title">Star Wars /</span> <span className="category-title">Planets</span></h1>
 
             { error && <Alert variant="warning">{error}</Alert>}
 
