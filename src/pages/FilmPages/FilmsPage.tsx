@@ -105,7 +105,7 @@ const FilmsPage = () => {
 										<Card.Text>Release date: {data.release_date}</Card.Text>
 										<Button
 											variant="dark"
-											onClick={() => {navigate(`/people/${data.id}`)}}
+											onClick={() => {navigate(`/films/${data.id}`)}}
 										>
 												Read more
 										</Button>
