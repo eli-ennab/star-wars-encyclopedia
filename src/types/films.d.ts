@@ -45,24 +45,24 @@ export type SW_Film = {
     release_date: string
     created: string
     edited: string
-    characters: [
+    characters: [{
         id: number,
         name: string
-    ]
-    planets: [
+    }]
+    planets: [{
         id: number,
         name: string
-    ]
-    starships: [
+    }]
+    starships: [{
         id: number,
         name: string
-    ]
-    vehicles: [
+    }]
+    vehicles: [{
         id: number,
         name: string
-    ]
-    species: [
+    }]
+    species: [{
         id: number,
         name: string
-    ]
+    }]
 }

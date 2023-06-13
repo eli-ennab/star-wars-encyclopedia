@@ -54,20 +54,20 @@ export type SW_Person = {
         id: number,
         name: string
     }
-    films: [
+    films: [{
+        id: number,
+        title: string
+    }]
+    species: [{
         id: number,
         name: string
-    ]
-    species: [
-        id?: number,
-        name?: string
-    ]
-    starships: [
+    }]
+    starships: [{
         id: number,
         name: string
-    ]
-    vehicles: [
+    }]
+    vehicles: [{
         id: number,
         name: string
-    ]
+    }]
 }
