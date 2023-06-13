@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { SW_Starship } from '../../types'
 import { getResourceById } from '../../services/StarWarsAPI'
@@ -13,7 +13,6 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import Row from 'react-bootstrap/Row'
 
 const StarshipPage = () => {
-    const location = useLocation()
     const navigate = useNavigate()
     const [error, setError] = useState<string|null>(null)
     const [loading, setLoading] = useState(true)
@@ -46,7 +45,7 @@ const StarshipPage = () => {
         <>
             <ReturnButton />
 
-            <h1>{location.state.message}</h1>
+            <h1>{resource?.name}</h1>
 
             { error && <Alert variant="warning">{error}</Alert>}
 
@@ -58,7 +57,6 @@ const StarshipPage = () => {
                         <Col key={resource.id} xs={12} md={6} lg={12} className="mb-3">
                             <Card>
                                 <Card.Body>
-                                    <Card.Title>{resource.name}</Card.Title>
                                     <Card.Text><strong>Created:</strong> {resource.created}</Card.Text>
                                     <Card.Text><strong>Crew:</strong> {resource.crew}</Card.Text>
                                     <Card.Text><strong>Manufacturer:</strong> {resource.manufacturer}</Card.Text> 
@@ -71,7 +69,7 @@ const StarshipPage = () => {
                                             <Button
                                                 className="my-3"
                                                 variant="dark"
-                                                onClick={() => { navigate(`/films/${data.id}`, { state: { message: `${data.title}` } })}}
+                                                onClick={() => {navigate(`/films/${data.id}`)}}
                                             >
                                                     Read more
                                             </Button>
@@ -86,7 +84,7 @@ const StarshipPage = () => {
                                                 <Button
                                                     className="my-3"
                                                     variant="dark"
-                                                    onClick={() => { navigate(`/people/${data.id}`, { state: { message: `${data.name}` } })}}
+                                                    onClick={() => {navigate(`/people/${data.id}`)}}
                                                 >
                                                         Read more
                                                 </Button>

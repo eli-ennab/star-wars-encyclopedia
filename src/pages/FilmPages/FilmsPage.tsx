@@ -106,7 +106,7 @@ const FilmsPage = () => {
 										<Button
 											className="my-3"
 											variant="dark"
-											onClick={() => { navigate(`/people/${data.id}`, { state: { message: `${data.title}` } })}}
+											onClick={() => {navigate(`/people/${data.id}`)}}
 										>
 												Read more
 										</Button>

@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { SW_Person } from '../../types'
@@ -13,7 +13,6 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import Row from 'react-bootstrap/Row'
 
 const PersonPage = () => {
-    const location = useLocation()
     const navigate = useNavigate()
     const [error, setError] = useState<string|null>(null)
     const [loading, setLoading] = useState(true)
@@ -46,7 +45,7 @@ const PersonPage = () => {
         <>
             <ReturnButton />
 
-            <h1>{location.state.message}</h1>
+            <h1>{resource?.name}</h1>
 
             { error && <Alert variant="warning">{error}</Alert>}
 
@@ -58,7 +57,6 @@ const PersonPage = () => {
                         <Col key={resource.id} xs={12} md={6} lg={12} className="mb-3">
                             <Card>
                                 <Card.Body>
-                                    <Card.Title>{resource.name}</Card.Title>
                                     <Card.Text><strong>Birthyear:</strong> {resource.birth_year}</Card.Text>
                                     <Card.Text><strong>Created:</strong> {resource.created}</Card.Text>
                                     <Card.Text><strong>Eyecolor:</strong> {resource.eye_color}</Card.Text>
@@ -73,7 +71,7 @@ const PersonPage = () => {
                                             <Button
                                                 className="my-3"
                                                 variant="dark"
-                                                onClick={() => { navigate(`/films/${data.id}`, { state: { message: `${data.title}` } })}}
+                                                onClick={() => { navigate(`/films/${data.id}`)}}
                                             >
                                                     Read more
                                             </Button>

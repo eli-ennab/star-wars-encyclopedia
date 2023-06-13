@@ -106,7 +106,7 @@ const PlanetsPage = () => {
 										<Button
 											className="my-3"
 											variant="dark"
-											onClick={() => { navigate(`/species/${data.id}`, { state: { message: `${data.name}` } })}}
+											onClick={() => {navigate(`/species/${data.id}`)}}
 										>
 												Read more
 										</Button>

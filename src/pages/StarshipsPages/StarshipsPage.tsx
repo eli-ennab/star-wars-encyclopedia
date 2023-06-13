@@ -106,7 +106,7 @@ const StarshipsPage = () => {
 										<Button
 											className="my-3"
 											variant="dark"
-											onClick={() => { navigate(`/starships/${data.id}`, { state: { message: `${data.name}` } })}}
+											onClick={() => {navigate(`/starships/${data.id}`)}}
 										>
 												Read more
 										</Button>
