@@ -3,7 +3,6 @@
 ### Todo
 
 - [ ] Flawless indentation
-- [ ] Deploy to Netlify or GitHub Pages (pending)
 - [ ] CSS 
   - [ ] Implement dream loading spinner (https://mhnpd.github.io/react-loader-spinner/docs/components/infinity-spin)
   - [ ] Create dropdown for resources (for example all characters, https://react-bootstrap.github.io/docs/components/dropdowns)
@@ -13,6 +12,7 @@
 
 ### Completed
 
+- [x] Deploy to Netlify or GitHub Pages (https://sw-encyclopedia.netlify.app/)
 - [x] Icons instead of button text
 - [x] Responsiveness
 - [x] Add a favicon
