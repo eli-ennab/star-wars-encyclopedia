@@ -103,7 +103,6 @@ const StarshipsPage = () => {
 									<Card.Body>
 										<Card.Title>{data.name}</Card.Title>
 										<Button
-											className="my-3"
 											variant="dark"
 											onClick={() => {navigate(`/starships/${data.id}`)}}
 										>

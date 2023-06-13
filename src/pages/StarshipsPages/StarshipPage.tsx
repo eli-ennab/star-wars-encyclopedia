@@ -67,7 +67,6 @@ const StarshipPage = () => {
                                             <ListGroup.Item key={data.id} className="col-12 col-lg-4">
                                             <p>{data.title}</p>
                                             <Button
-                                                className="my-3"
                                                 variant="dark"
                                                 onClick={() => {navigate(`/films/${data.id}`)}}
                                             >
@@ -82,7 +81,6 @@ const StarshipPage = () => {
                                                 <ListGroup.Item key={data.id} className="col-12 col-lg-4">
                                                 <p>{data.name}</p>
                                                 <Button
-                                                    className="my-3"
                                                     variant="dark"
                                                     onClick={() => {navigate(`/people/${data.id}`)}}
                                                 >

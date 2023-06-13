@@ -103,9 +103,8 @@ const VehiclesPage = () => {
 									<Card.Body>
 										<Card.Title>{data.name}</Card.Title>
 										<Button
-											className="my-3"
 											variant="dark"
-											onClick={() => { navigate(`/vehicles/${data.id}`, { state: { message: `${data.name}` } })}}
+											onClick={() => {navigate(`/vehicles/${data.id}`)}}
 										>
 												Read more
 										</Button>
