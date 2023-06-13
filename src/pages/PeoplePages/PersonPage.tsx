@@ -46,7 +46,7 @@ const PersonPage = () => {
         <>
             <ReturnButton />
 
-            <h1>{location?.state.message}</h1>
+            <h1>{location.state.message}</h1>
 
             { error && <Alert variant="warning">{error}</Alert>}
 
