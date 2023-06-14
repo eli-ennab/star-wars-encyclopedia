@@ -65,7 +65,6 @@ const PlanetsPage = () => {
 		searchSWPlanets(searchInput)
 	}
 
-
 	useEffect(() => {
 		if (!paramSearch) {
 			getPlanets(paramSearch)
@@ -127,8 +126,8 @@ const PlanetsPage = () => {
 						onNextPage={() => { paramSearch 
 											? setSearchParams(	{ search: paramSearch, page: (Number(paramPage) + 1).toString() }) 
 											: setSearchParams( { page: (Number(paramPage) + 1).toString() })
+											}
 										}
-									}
 						/>
 				</div>
 			)}

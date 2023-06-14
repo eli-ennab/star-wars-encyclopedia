@@ -44,7 +44,7 @@ const PeoplePage = () => {
 		setResult(null)
 
 		try {
-			const data = await searchPeople(searchQuery, 1)
+			const data = await searchPeople(searchQuery, Number(paramPage))
 			setResult(data)
 		} catch (err: any) {
 			setError(err.message)
@@ -64,7 +64,6 @@ const PeoplePage = () => {
 
 		searchSWPeople(searchInput)
 	}
-
 
 	useEffect(() => {
 		if (!paramSearch) {
@@ -127,8 +126,8 @@ const PeoplePage = () => {
 						onNextPage={() => { paramSearch 
 											? setSearchParams(	{ search: paramSearch, page: (Number(paramPage) + 1).toString() }) 
 											: setSearchParams( { page: (Number(paramPage) + 1).toString() })
+											}
 										}
-									}
 						/>
 				</div>
 			)}
