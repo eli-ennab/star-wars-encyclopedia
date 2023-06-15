@@ -13,6 +13,8 @@ import {
 	SW_VehiclesResponse 
 } from '../types'
 
+const FAKE_DELAY = 1000
+
 // Create a new axios instance
 const instance = axios.create({
 	baseURL: "https://swapi.thehiveresistance.com/api",
@@ -31,7 +33,7 @@ const instance = axios.create({
  */
 export const get = async <T>(endpoint: string) => {
 	const response = await instance.get(endpoint)
-	await new Promise(r => setTimeout(r, 1500))
+	await new Promise(r => setTimeout(r, FAKE_DELAY))
 	return response.data as T
 }
 
@@ -45,7 +47,7 @@ export const get = async <T>(endpoint: string) => {
  */
 export const getResourcesByPage = async <T>(endpoint: string, page = 1) => {
 	const response = await instance.get(`${endpoint}?page=${page}`)
-	await new Promise(r => setTimeout(r, 1500))
+	await new Promise(r => setTimeout(r, FAKE_DELAY))
 	return response.data as T
 }
 
@@ -58,7 +60,7 @@ export const getResourcesByPage = async <T>(endpoint: string, page = 1) => {
  * @returns Promise
  */
 export const getResourceById = async <T>(endpoint: string, resource_id: number) => {
-	await new Promise(r => setTimeout(r, 1500))
+	await new Promise(r => setTimeout(r, FAKE_DELAY))
 	return get<T>(`${endpoint}/${resource_id}`)
 }
 
@@ -71,7 +73,7 @@ export const getResourceById = async <T>(endpoint: string, resource_id: number) 
  * @returns Promise
  */
 export const searchFilms = async (query: string, page = 1) => {
-	await new Promise(r => setTimeout(r, 1500))
+	await new Promise(r => setTimeout(r, FAKE_DELAY))
 	return get<SW_FilmsResponse>(`films/?search=${query}&page=${page}`)
 }
 
@@ -84,7 +86,7 @@ export const searchFilms = async (query: string, page = 1) => {
  * @returns Promise
  */
 export const searchPeople = async (query: string, page = 1) => {
-	await new Promise(r => setTimeout(r, 1500))
+	await new Promise(r => setTimeout(r, FAKE_DELAY))
 	return get<SW_PeopleResponse>(`people/?search=${query}&page=${page}`)
 }
 
@@ -97,7 +99,7 @@ export const searchPeople = async (query: string, page = 1) => {
  * @returns Promise
  */
 export const searchPlanets = async (query: string, page = 1) => {
-	await new Promise(r => setTimeout(r, 1500))
+	await new Promise(r => setTimeout(r, FAKE_DELAY))
 	return get<SW_PlanetsResponse>(`planets/?search=${query}&page=${page}`)
 }
 
@@ -110,7 +112,7 @@ export const searchPlanets = async (query: string, page = 1) => {
  * @returns Promise
  */
 export const searchSpecies = async (query: string, page = 1) => {
-	await new Promise(r => setTimeout(r, 1500))
+	await new Promise(r => setTimeout(r, FAKE_DELAY))
 	return get<SW_SpeciesResponse>(`species/?search=${query}&page=${page}`)
 }
 
@@ -123,7 +125,7 @@ export const searchSpecies = async (query: string, page = 1) => {
  * @returns Promise
  */
 export const searchStarships = async (query: string, page = 1) => {
-	await new Promise(r => setTimeout(r, 1500))
+	await new Promise(r => setTimeout(r, FAKE_DELAY))
 	return get<SW_StarshipsResponse>(`starships/?search=${query}&page=${page}`)
 }
 
@@ -136,6 +138,6 @@ export const searchStarships = async (query: string, page = 1) => {
  * @returns Promise
  */
 export const searchVehicles = async (query: string, page = 1) => {
-	await new Promise(r => setTimeout(r, 1500))
+	await new Promise(r => setTimeout(r, FAKE_DELAY))
 	return get<SW_VehiclesResponse>(`vehicles/?search=${query}&page=${page}`)
 }
