@@ -75,6 +75,62 @@ const FilmPage = () => {
                                             </ListGroup.Item>
                                         ))}
                                     </ListGroup>
+                                    <Card.Text><strong>Planets:</strong></Card.Text>                              
+                                    <ListGroup className="mb-3 d-flex flex-row flex-wrap">
+                                        {resource.planets.map(data => (
+                                            <ListGroup.Item key={data.id} className="col-12 col-lg-4">
+                                            <p>{data.name}</p>
+                                            <Button
+                                                variant="dark"
+                                                onClick={() => { navigate(`/planets/${data.id}`)}}
+                                            >
+                                                    Read more
+                                            </Button>
+                                            </ListGroup.Item>
+                                        ))}
+                                    </ListGroup>
+                                    <Card.Text><strong>Starships:</strong></Card.Text>                              
+                                    <ListGroup className="mb-3 d-flex flex-row flex-wrap">
+                                        {resource.starships.map(data => (
+                                            <ListGroup.Item key={data.id} className="col-12 col-lg-4">
+                                            <p>{data.name}</p>
+                                            <Button
+                                                variant="dark"
+                                                onClick={() => { navigate(`/starships/${data.id}`)}}
+                                            >
+                                                    Read more
+                                            </Button>
+                                            </ListGroup.Item>
+                                        ))}
+                                    </ListGroup>
+                                    <Card.Text><strong>Species:</strong></Card.Text>                              
+                                    <ListGroup className="mb-3 d-flex flex-row flex-wrap">
+                                        {resource.species.map(data => (
+                                            <ListGroup.Item key={data.id} className="col-12 col-lg-4">
+                                            <p>{data.name}</p>
+                                            <Button
+                                                variant="dark"
+                                                onClick={() => { navigate(`/species/${data.id}`)}}
+                                            >
+                                                    Read more
+                                            </Button>
+                                            </ListGroup.Item>
+                                        ))}
+                                    </ListGroup>
+                                    <Card.Text><strong>Vehicles:</strong></Card.Text>                              
+                                    <ListGroup className="mb-3 d-flex flex-row flex-wrap">
+                                        {resource.vehicles.map(data => (
+                                            <ListGroup.Item key={data.id} className="col-12 col-lg-4">
+                                            <p>{data.name}</p>
+                                            <Button
+                                                variant="dark"
+                                                onClick={() => { navigate(`/vehicles/${data.id}`)}}
+                                            >
+                                                    Read more
+                                            </Button>
+                                            </ListGroup.Item>
+                                        ))}
+                                    </ListGroup>
                                 </Card.Body>
                             </Card>
                         </Col>
