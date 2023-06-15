@@ -4,7 +4,6 @@
 
 - [ ] Flawless indentation
 - [ ] CSS 
-  - [ ] Implement dream loading spinner (https://mhnpd.github.io/react-loader-spinner/docs/components/infinity-spin)
   - [ ] Create dropdown for resources (for example all characters, https://react-bootstrap.github.io/docs/components/dropdowns)
 
 ### In Progress
@@ -12,6 +11,7 @@
 
 ### Completed
 
+- [x] Implement dream loading spinner
 - [x] Deploy to Netlify or GitHub Pages (https://sw-encyclopedia.netlify.app/)
 - [x] Icons instead of button text
 - [x] Responsiveness
