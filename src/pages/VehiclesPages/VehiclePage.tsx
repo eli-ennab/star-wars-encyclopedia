@@ -3,15 +3,14 @@ import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { SW_Vehicle } from '../../types'
 import { getResourceById } from '../../services/StarWarsAPI'
+import LoadingSpinner from '../../components/LoadingSpinner'
 import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Row from 'react-bootstrap/Row'
-import Spinner from 'react-bootstrap/Spinner'
 import ReturnButton from '../../components/ReturnButton'
-import LoadingSpinner from '../../components/LoadingSpinner'
 
 const VehiclePage = () => {
     const navigate = useNavigate()
