@@ -11,6 +11,7 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import Row from 'react-bootstrap/Row'
 import Spinner from 'react-bootstrap/Spinner'
 import ReturnButton from '../../components/ReturnButton'
+import LoadingSpinner from '../../components/LoadingSpinner'
 
 const VehiclePage = () => {
     const navigate = useNavigate()
@@ -49,11 +50,7 @@ const VehiclePage = () => {
 
             { error && <Alert variant="warning">{error}</Alert>}
 
-            { loading && 
-				<Spinner animation="border" role="status" variant="light">
-					<span className="visually-hidden">Loading...</span>
-				</Spinner>
-			}
+			{ loading && <LoadingSpinner /> }
 
             { !loading && resource && (
                 <div id="resource">
